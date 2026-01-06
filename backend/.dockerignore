@@ -1,0 +1,10 @@
+# Prevent secrets and unnecessary files from being copied into the image
+.env
+.env.*
+node_modules/
+logs/
+.git/
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db

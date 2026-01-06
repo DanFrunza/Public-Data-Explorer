@@ -1,0 +1,90 @@
+.register {
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-top: 100px;
+}
+
+.register form{
+    background-color: rgb(31, 9, 46);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.register .form-group {
+  display: flex;
+  flex-direction: column; 
+  width: 80%; 
+}
+
+.register .form-group label {
+  margin-bottom: 6px; 
+  font-weight: 600;
+}
+
+.register .form-group input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #555;  
+  border-radius: 6px;
+  width: 100%;  
+  box-sizing: border-box; 
+  background-color: #1f092e; 
+  color: white;
+  outline: none;
+  background-color: #1f092e;
+}
+
+.register .error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 4px;
+  align-self: center; 
+}
+
+.register fieldset {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.register input:-webkit-autofill,
+.register input:-webkit-autofill:hover, 
+.register input:-webkit-autofill:focus, 
+.register input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #1f092e inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.register button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #35027d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
