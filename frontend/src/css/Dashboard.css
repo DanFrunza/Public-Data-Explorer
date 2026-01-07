@@ -3,14 +3,14 @@
   margin: 100px auto 0;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
   align-items: center;
   color: white;
   justify-content: center;
 }
 
 .chart-card {
-  background-color: rgb(31, 9, 46);
+  background-color: var(--color-surface);
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
@@ -37,7 +37,7 @@
   border-radius: 6px;
   cursor: pointer;
 
-  background-color: #8884d8;
+  background-color: var(--color-chart-primary);
   color: white;
   transition: background-color 0.3s ease;
   user-select: none;
@@ -46,7 +46,7 @@
 /* Efectul buton activ */
 .chart-card .toggle-btn.active,
 .chart-card .toggle-btn:hover {
-  background-color: rgb(226, 78, 239);
+  background-color: var(--color-accent);
 }
 
 /* SVG-ul sa ocupe toata latimea disponibila, cu o inaltime fixa */
@@ -58,6 +58,6 @@
 .chart-card svg text {
   font-family: 'Arial', sans-serif;  /* sau orice font vrei */
   font-size: 14px;                   /* ajustează după cum vrei */
-  fill: #ddd;                       /* culoarea textului */
+  fill: var(--color-neutral-light); /* culoarea textului */
   
 }

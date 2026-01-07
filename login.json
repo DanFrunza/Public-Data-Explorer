@@ -1,0 +1,1 @@
+{"message":"Login successful","user":{"id":7,"email":"smoke@example.com","first_name":"Smoke","last_name":"Test","country":"RO","created_at":"2026-01-07T12:27:02.740Z"},"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Iiwicm9sZSI6InVzZXIiLCJwbGFuIjoiZnJlZSIsImlhdCI6MTc2Nzc4ODgyMiwiZXhwIjoxNzY3Nzg5NzIyfQ.1192o38xFOL17A5M9TKVS5qp0YydDLBs8Ulw19Up-cc"}

@@ -1,5 +1,23 @@
+:root {
+  /* Core palette */
+  --color-bg: #0D1220;              /* page background */
+  --color-surface: #151A2E;         /* navbar/cards */
+  --color-surface-muted: #0F1426;   /* inputs/secondary blocks */
+  --color-text: #E6EAF2;            /* primary text */
+  --color-border: #2A3350;          /* subtle borders */
+  --color-dropdown-bg: #FFFFFF;     /* dropdown surfaces */
+  --color-dropdown-text: #111827;   /* dropdown text */
+  --color-dropdown-hover: #F3F4F6;  /* dropdown hover */
+  --color-accent: #8B5CF6;          /* brand accent */
+  --color-accent-2: #7C3AED;        /* buttons/accent strong */
+  --color-chart-primary: #60A5FA;   /* chart lines/bars */
+  --color-neutral-light: #D1D5DB;   /* muted text/lines */
+  --color-error: #EF4444;           /* errors */
+}
+
 body {
-  background-color: rgb(41, 12, 61);
+  background-color: var(--color-bg);
+  color: var(--color-text);
   margin : 0;
   padding: 0;
   width: 100%;

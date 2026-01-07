@@ -9,12 +9,15 @@ An educational, full‑stack platform for exploring and visualizing large public
 
 ## Features
 - **Interactive visualizations:** D3.js dashboards and charts (work in progress).
-- **User accounts:** Secure register/login flows with validations and rate limiting.
-- **Data pipeline:** Python-based processing, parquet storage, and S3‑compatible object storage (MinIO in dev).
-- **Production‑like setup:** Docker Compose orchestration, environment‑driven configuration.
+- **User accounts:** Secure register/login with validations and rate limiting.
+- **Production‑grade auth:** JWT access token + httpOnly refresh cookie with rotation & reuse detection.
+- **Persistent sessions:** Automatic refresh on page reload and 401 with Redux integration.
+- **User avatars:** MinIO‑backed storage with presigned URLs; avatar shown in navbar.
+- **Unified theme:** Professional dark palette via CSS variables; consistent UI across pages.
+- **Data pipeline:** Python‑based (planned), Parquet & S3‑compatible object storage.
 
 ## Tech Stack
-- **Frontend:** React (Vite), JavaScript, React Router, D3.js, CSS.
+- **Frontend:** React (Vite), JavaScript, React Router, Redux Toolkit, D3.js, CSS.
 - **Backend:** Node.js, Express, PostgreSQL.
 - **Data Processing:** Python, PySpark (planned), Parquet, MinIO (S3‑compatible).
 - **Infrastructure:** Docker, Docker Compose, environment variables.
@@ -43,20 +46,24 @@ npm run dev
 
 ## Backend Service
 - Entry point: [backend/src/server.js](backend/src/server.js)
-- Routes: [backend/src/routes/auth.js](backend/src/routes/auth.js)
-- Controllers: [backend/src/controllers/authController.js](backend/src/controllers/authController.js)
-- Services: [backend/src/services/userService.js](backend/src/services/userService.js)
-- DB Pool: [backend/src/db/pool.js](backend/src/db/pool.js)
+- Auth module: [backend/src/modules/auth/routes.js](backend/src/modules/auth/routes.js)
+- Controllers: [backend/src/modules/auth/controller.js](backend/src/modules/auth/controller.js)
+- Services: [backend/src/modules/auth/service.js](backend/src/modules/auth/service.js)
+- Security middleware: [backend/src/middleware/security.js](backend/src/middleware/security.js)
 - Security middleware: [backend/src/middleware/security.js](backend/src/middleware/security.js)
 - Rate limiting: [backend/src/middleware/rateLimiter.js](backend/src/middleware/rateLimiter.js)
 
 ### Implemented API Endpoints
-- `POST /api/register` – Validates input, hashes passwords with Argon2id, inserts user.
-- `POST /api/login` – Verifies credentials using Argon2, returns basic success response (JWT planned).
+- `POST /api/auth/register` – Validates input, hashes passwords (Argon2id), issues access token + refresh cookie.
+- `POST /api/auth/login` – Verifies credentials, issues access token + refresh cookie.
+- `POST /api/auth/refresh` – Rotates refresh token, returns new access token (+ user data).
+- `POST /api/auth/logout` – Revokes refresh token and clears cookie.
+- `GET /api/auth/me` – Returns current user (requires `Authorization: Bearer`).
 - `GET /health` – Health check.
 
-### Security Posture (Baseline)
-- **Passwords:** Argon2id with sane parameters (memory/time/parallelism).
+### Security Posture
+- **Passwords:** Argon2id with strong parameters.
+- **Tokens:** Short‑lived access JWT; refresh cookie (`httpOnly`, `SameSite=Lax`, rotation & reuse detection).
 - **Validation:** Email/password/name/country checks server‑side and client‑side.
 - **Queries:** Parameterized SQL to avoid injection.
 - **Abuse controls:** Per‑route rate limiting (`register`, `login`).
@@ -80,13 +87,17 @@ docker compose exec backend npm run migrate
 ```
 
 Schema highlights:
-- `users` with required fields (email unique, password_hash, first_name, last_name, country) and optional profile fields (gender, date_of_birth, city, occupation, bio, phone, avatar_url, timezone, locale).
-- `updated_at` auto‑updated via trigger on update.
+- `users` with email unique, password_hash, first_name, last_name, country, and profile fields.
+- `refresh_tokens` for allowlisting, rotation, and revocation (jti, hash, expires_at, ip, user_agent, rotated_at, revoked_at).
+- `users.avatar_key` + avatar metadata (for MinIO objects); `updated_at` auto‑updated via trigger.
 
 ## Frontend
 - `.env` format: `VITE_API_URL` pointing to backend (e.g., `http://localhost:4000`).
-- Register page: validates inputs, calls `/api/register`, shows success/error alerts.
-- Login page: validates inputs, calls `/api/login`, alerts on success; token storage planned.
+- Register page: validates inputs, calls `/api/auth/register`, stores token+user, redirects to Dashboard.
+- Login page: validates inputs, calls `/api/auth/login`, stores token+user, redirects to Dashboard.
+- Session persistence: `AuthBootstrap` refreshes token on load; `apiClient` auto‑refreshes on 401.
+- Navbar: avatar image + greeting (first name); dropdown actions.
+- Theme: CSS variables in `index.css` for unified dark palette.
 
 ## Environment Configuration
 - **Frontend:** [frontend/.env.example](frontend/.env.example) → create `frontend/.env` with `VITE_API_URL`.

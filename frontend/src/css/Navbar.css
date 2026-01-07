@@ -1,5 +1,9 @@
 .navbar {
-  background-color: rgb(31, 9, 46);
+  --nav-font-size: 35px;
+  --user-icon-scale: 1.1; 
+  --arrow-scale: 0.6;     
+  background-color: var(--color-surface);
+  color: white;
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -33,7 +37,7 @@
 .navbar a {
   color: white;
   text-decoration: none;
-  font-size: 35px;
+  font-size: var(--nav-font-size);
 }
 
 .navbar a[aria-current="page"] {
@@ -44,7 +48,7 @@
   opacity: 0.85;
 }
 
-.navbar img {
+.navbar .navbar-logo img {
   height: 60px;
   width: auto;
   filter: brightness(0) invert(1);
@@ -54,4 +58,68 @@
   display: flex;
   align-items: center;
   gap: 50px;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  font-size: var(--nav-font-size);
+}
+
+.user-icon {
+  font-size: calc(1em * var(--user-icon-scale));
+}
+
+.navbar .user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  filter: none;
+}
+
+.user-greeting {
+  font-size: 26px;
+  opacity: 0.95;
+}
+
+.arrow {
+  font-size: calc(1em * var(--arrow-scale));
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  background: var(--color-dropdown-bg);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 120px;
+  z-index: 100;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: var(--color-dropdown-text);
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--color-dropdown-hover);
 }

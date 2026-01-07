@@ -1,8 +1,13 @@
 import React from "react";
-import {useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/Auth.css";
+import { useDispatch } from "react-redux";
+import { setCredentials, setAuthStatus, setAuthError } from "../store/slices/authSlice";
+import { post } from "../api/apiClient";
 
 const Register = () => {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -59,6 +64,8 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   }
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -67,26 +74,18 @@ const Register = () => {
     }
 
     setLoading(true);
+    dispatch(setAuthStatus("loading"));
 
     try {
-      const apiBase = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiBase}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-       
-        setErrors({ server: errorData.message || "Registration failed" });
-      } else {
-      
-        alert("Account created successfully!");
-        
-      }
+      const data = await post("/api/auth/register", formData, { auth: false });
+      // Backend returns { message, user, accessToken }
+      dispatch(setCredentials({ token: data.accessToken || null, user: data.user }));
+      dispatch(setAuthStatus("authenticated"));
+      navigate('/dashboard');
     } catch (error) {
-      setErrors({ server: "Network error, please try again." });
+      const msg = error?.message || "Registration failed";
+      setErrors({ server: msg });
+      dispatch(setAuthError(msg));
     } finally {
       setLoading(false);
     }

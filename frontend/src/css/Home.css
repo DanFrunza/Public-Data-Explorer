@@ -12,7 +12,7 @@
 }
 
 .home section.card, .home section.TitleCard{
-    background-color: rgb(31, 9, 46);
+    background-color: var(--color-surface);
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -75,6 +75,6 @@
 }
 
 .home section.card a {
-    color: rgb(226, 78, 239);
+    color: var(--color-accent);
     text-decoration: none;
 }

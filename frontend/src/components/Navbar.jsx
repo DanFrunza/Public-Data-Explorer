@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../css/Navbar.css";
 import logo from '../assets/DF.svg';
+import { FaUserCircle, FaChevronDown } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { selectIsAuthenticated, selectUser } from "../store/slices/authSlice";
+import { logout } from "../store/slices/authSlice";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -26,13 +34,46 @@ const Navbar = () => {
           <NavLink to="/about">About</NavLink>
         </li>
         <li>
-          <NavLink to="/login">Login</NavLink>
-        </li>
-        <li>
-          <NavLink to="/register">Register</NavLink>
-        </li>
-        <li>
           <NavLink to="/faq">FAQ</NavLink>
+        </li>
+        <li className="user-dropdown">
+          <button
+            type="button"
+            className="user-btn"
+            aria-haspopup="menu"
+            aria-expanded={open}
+            onClick={() => setOpen(o => !o)}
+          >
+            {user?.avatar_url ? (
+              <img className="user-avatar" src={user.avatar_url} alt="User avatar" />
+            ) : (
+              <FaUserCircle className="user-icon" />
+            )}
+            {isAuth && (
+              <span className="user-greeting">Hello, {user?.first_name || user?.firstname || user?.email || 'User'}</span>
+            )}
+            <FaChevronDown className={`arrow ${open ? "open" : ""}`} />
+          </button>
+          {open && (
+            <div className="dropdown-menu">
+              {isAuth ? (
+                <>
+                  <span style={{ padding: "10px 14px", display: "block" }}>
+                    {user?.first_name || user?.firstname || user?.email || "User"}
+                  </span>
+                  <Link to="/" onClick={() => { setOpen(false); dispatch(logout()); }}>
+                    Logout
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setOpen(false)}>
+                    Login
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </li>
       </ul>
     </nav>

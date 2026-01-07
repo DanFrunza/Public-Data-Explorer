@@ -3,7 +3,7 @@ const cors = require('cors');
 const express = require('express');
 
 function configureSecurity(app) {
-  app.use(cors());
+  app.use(cors({ origin: true, credentials: true }));
   app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   }));

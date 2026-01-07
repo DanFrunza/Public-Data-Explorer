@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import "../css/Auth.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials, setAuthStatus, setAuthError } from "../store/slices/authSlice";
+import { post } from "../api/apiClient";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -19,25 +24,23 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     setLoading(true);
+    dispatch(setAuthStatus("loading"));
     try {
-      const apiBase = import.meta.env.VITE_API_URL;
-      const resp = await fetch(`${apiBase}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await resp.json();
-      if (!resp.ok) {
-        setErrors({ server: data.message || "Login failed" });
-      } else {
-        alert("Login successful!");
-      }
+      const data = await post("/api/auth/login", formData, { auth: false });
+      // Backend returns { message, user, accessToken }
+      dispatch(setCredentials({ token: data.accessToken || null, user: data.user }));
+      dispatch(setAuthStatus("authenticated"));
+      navigate('/dashboard');
     } catch (err) {
-      setErrors({ server: "Network error, please try again." });
+      const msg = err?.message || "Login failed";
+      setErrors({ server: msg });
+      dispatch(setAuthError(msg));
     } finally {
       setLoading(false);
     }
@@ -61,6 +64,7 @@ const Login = () => {
           </div>
           {errors.password && <span className="error">{errors.password}</span>}
         </fieldset>
+        <Link id="register-link" to="/register">You don't have an account? Register</Link>
         {errors.server && <span className="error">{errors.server}</span>}
         <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
       </form>

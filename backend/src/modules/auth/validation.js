@@ -29,10 +29,21 @@ function validateRegister(payload) {
   return errors;
 }
 
+function validateLogin(payload) {
+  const { email, password } = payload || {};
+  const errors = {};
+  if (!isValidEmail(email)) errors.email = 'Invalid email';
+  if (typeof password !== 'string' || password.length < 1 || password.length > 128) {
+    errors.password = 'Invalid password';
+  }
+  return errors;
+}
+
 module.exports = {
   isValidEmail,
   isValidPassword,
   isValidName,
   isValidCountry,
   validateRegister,
+  validateLogin,
 };
