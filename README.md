@@ -74,9 +74,9 @@ npm run dev
 - **File uploads:** Frontend size/type checks; backend MIME allowlist + signature verification (JPEG/PNG/WEBP);
 	MinIO presigned URLs for read‑only access; objects cannot execute code.
 - **Queries:** Parameterized SQL to avoid injection.
-- **Abuse controls:** Per‑route rate limiting (`register`, `login`).
+- **Abuse controls:** Per‑route rate limiting (`register`, `login`, `avatar upload`).
 - **Headers:** `helmet` configured; body size limited.
-- **CORS:** Credentialed; planned allowlist for known frontend origin.
+- **CORS:** Credentialed; env‑driven allowlist via `CORS_ALLOWED_ORIGINS`.
 - **Config:** Environment variables (no secrets in repo).
 
 Recommended next steps:
