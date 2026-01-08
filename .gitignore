@@ -41,3 +41,5 @@ Test Assets/
 
 # --- Local auth/cookie jars ---
 cookies.txt
+login.json
+refresh.json

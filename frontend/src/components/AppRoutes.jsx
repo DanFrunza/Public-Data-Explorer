@@ -7,6 +7,7 @@ import About from './About.jsx';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import FAQ from './FAQ.jsx';
+import Profile from './Profile.jsx';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/faq" element={<FAQ />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

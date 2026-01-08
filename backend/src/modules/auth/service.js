@@ -27,13 +27,13 @@ async function createUser({ email, password, first_name, last_name, country }) {
 }
 
 async function findUserByEmail(email) {
-  const sql = `SELECT id, email, password_hash, first_name, last_name, country, plan, role, avatar_key, created_at FROM users WHERE email = $1`;
+  const sql = `SELECT * FROM users WHERE email = $1`;
   const res = await pool.query(sql, [String(email).trim().toLowerCase()]);
   return res.rows[0] || null;
 }
 
 async function findUserById(id) {
-  const sql = `SELECT id, email, password_hash, first_name, last_name, country, plan, role, avatar_key, created_at FROM users WHERE id = $1`;
+  const sql = `SELECT * FROM users WHERE id = $1`;
   const res = await pool.query(sql, [id]);
   return res.rows[0] || null;
 }

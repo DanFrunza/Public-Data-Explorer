@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Auth.css";
 import { useDispatch } from "react-redux";
 import { setCredentials, setAuthStatus, setAuthError } from "../store/slices/authSlice";
-import { post } from "../api/apiClient";
+import { post, put } from "../api/apiClient";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -81,6 +81,12 @@ const Register = () => {
       // Backend returns { message, user, accessToken }
       dispatch(setCredentials({ token: data.accessToken || null, user: data.user }));
       dispatch(setAuthStatus("authenticated"));
+      // Set sensible defaults for timezone and locale after successful registration
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const loc = navigator.language || navigator.userLanguage;
+        await put('/api/users/me', { timezone: tz, locale: loc }, { auth: true });
+      } catch {}
       navigate('/dashboard');
     } catch (error) {
       const msg = error?.message || "Registration failed";

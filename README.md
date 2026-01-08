@@ -12,8 +12,11 @@ An educational, full‑stack platform for exploring and visualizing large public
 - **User accounts:** Secure register/login with validations and rate limiting.
 - **Production‑grade auth:** JWT access token + httpOnly refresh cookie with rotation & reuse detection.
 - **Persistent sessions:** Automatic refresh on page reload and 401 with Redux integration.
-- **User avatars:** MinIO‑backed storage with presigned URLs; avatar shown in navbar.
+- **Profile:** `GET /api/users/me` with safe fields; global Edit mode with form across cards.
+- **Profile edit:** `PUT /api/users/me` updates whitelisted fields with server‑side normalization.
+- **Avatar uploads:** `POST /api/users/me/avatar` with MIME allowlist, signature checks, and presigned URL display.
 - **Unified theme:** Professional dark palette via CSS variables; consistent UI across pages.
+- **Developer UX:** Clear error messages (401/403/400 hints) surfaced in Profile for uploads.
 - **Data pipeline:** Python‑based (planned), Parquet & S3‑compatible object storage.
 
 ## Tech Stack
@@ -59,20 +62,26 @@ npm run dev
 - `POST /api/auth/refresh` – Rotates refresh token, returns new access token (+ user data).
 - `POST /api/auth/logout` – Revokes refresh token and clears cookie.
 - `GET /api/auth/me` – Returns current user (requires `Authorization: Bearer`).
+- `GET /api/users/me` – Returns safe profile fields; includes `avatar_url` when available.
+- `PUT /api/users/me` – Updates whitelisted profile fields.
+- `POST /api/users/me/avatar` – Uploads avatar (multipart), stores in MinIO, returns presigned URL.
 - `GET /health` – Health check.
 
 ### Security Posture
 - **Passwords:** Argon2id with strong parameters.
 - **Tokens:** Short‑lived access JWT; refresh cookie (`httpOnly`, `SameSite=Lax`, rotation & reuse detection).
-- **Validation:** Email/password/name/country checks server‑side and client‑side.
+- **Validation:** Email/password/name/country checks server‑side and client‑side; profile edit normalizes and validates fields.
+- **File uploads:** Frontend size/type checks; backend MIME allowlist + signature verification (JPEG/PNG/WEBP);
+	MinIO presigned URLs for read‑only access; objects cannot execute code.
 - **Queries:** Parameterized SQL to avoid injection.
 - **Abuse controls:** Per‑route rate limiting (`register`, `login`).
 - **Headers:** `helmet` configured; body size limited.
+- **CORS:** Credentialed; planned allowlist for known frontend origin.
 - **Config:** Environment variables (no secrets in repo).
 
 Recommended next steps:
-- Restrict CORS to known frontend origin.
-- Add JWT access + refresh tokens and auth middleware.
+- Restrict CORS to known frontend origin (env‑driven allowlist).
+- Add stricter field validation (lengths/formats) and optional server‑side image re‑encoding.
 - Implement account verification and password reset flows.
 - Add structured logging (e.g., `pino`) and security event audit.
 - Enforce HTTPS in production, secret management via vault.
@@ -93,9 +102,10 @@ Schema highlights:
 
 ## Frontend
 - `.env` format: `VITE_API_URL` pointing to backend (e.g., `http://localhost:4000`).
-- Register page: validates inputs, calls `/api/auth/register`, stores token+user, redirects to Dashboard.
-- Login page: validates inputs, calls `/api/auth/login`, stores token+user, redirects to Dashboard.
-- Session persistence: `AuthBootstrap` refreshes token on load; `apiClient` auto‑refreshes on 401.
+- Register: validates inputs, calls `/api/auth/register`, stores token+user, sets defaults for `timezone`/`locale`, redirects to Dashboard.
+- Login: validates inputs, calls `/api/auth/login`, stores token+user, redirects to Dashboard.
+- Profile: `GET /api/users/me` and global Edit mode with form; client‑side preview for avatar.
+- Session persistence: `AuthBootstrap` refreshes token on load; `apiClient` auto‑refreshes on 401 and preserves `FormData` headers on retry.
 - Navbar: avatar image + greeting (first name); dropdown actions.
 - Theme: CSS variables in `index.css` for unified dark palette.
 

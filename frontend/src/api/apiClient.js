@@ -32,7 +32,15 @@ export async function request(method, path, { body, auth = false, signal } = {})
     credentials: 'include',
   };
   if (body !== undefined) {
-    opts.body = typeof body === 'string' ? body : JSON.stringify(body);
+    const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
+    if (isFormData) {
+      // Let browser set correct multipart boundary; remove JSON header
+      delete headers['Content-Type'];
+      opts.headers = headers;
+      opts.body = body;
+    } else {
+      opts.body = typeof body === 'string' ? body : JSON.stringify(body);
+    }
   }
 
   let res = await fetch(url, opts);
@@ -65,7 +73,8 @@ export async function request(method, path, { body, auth = false, signal } = {})
           const state = store.getState();
           const newToken = state.auth?.token;
           if (newToken) {
-            opts = { ...opts, headers: { ...headers, 'Content-Type': 'application/json', 'Authorization': `Bearer ${newToken}` } };
+            // Preserve original headers and body type; only update Authorization
+            opts = { ...opts, headers: { ...headers, 'Authorization': `Bearer ${newToken}` } };
           }
           res = await fetch(url, opts);
           const retryJson = (res.headers.get('content-type') || '').includes('application/json')

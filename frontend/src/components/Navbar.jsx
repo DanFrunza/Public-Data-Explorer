@@ -59,8 +59,10 @@ const Navbar = () => {
               {isAuth ? (
                 <>
                   <span style={{ padding: "10px 14px", display: "block" }}>
-                    {user?.first_name || user?.firstname || user?.email || "User"}
                   </span>
+                  <Link to="/profile" onClick={() => setOpen(false)}>
+                    Profile
+                  </Link>
                   <Link to="/" onClick={() => { setOpen(false); dispatch(logout()); }}>
                     Logout
                   </Link>
