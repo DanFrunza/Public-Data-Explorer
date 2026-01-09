@@ -8,7 +8,7 @@ An educational, full‑stack platform for exploring and visualizing large public
 - **Audience:** Recruiters, collaborators, and learners interested in modern web/data engineering.
 
 ## Features
-- **Interactive visualizations:** D3.js dashboards and charts (work in progress).
+- **Interactive visualizations:** SVG/D3‑style dashboards and charts.
 - **User accounts:** Secure register/login with validations and rate limiting.
 - **Production‑grade auth:** JWT access token + httpOnly refresh cookie with rotation & reuse detection.
 - **Persistent sessions:** Automatic refresh on page reload and 401 with Redux integration.
@@ -17,12 +17,12 @@ An educational, full‑stack platform for exploring and visualizing large public
 - **Avatar uploads:** `POST /api/users/me/avatar` with MIME allowlist, signature checks, and presigned URL display.
 - **Unified theme:** Professional dark palette via CSS variables; consistent UI across pages.
 - **Developer UX:** Clear error messages (401/403/400 hints) surfaced in Profile for uploads.
-- **Data pipeline:** Python‑based (planned), Parquet & S3‑compatible object storage.
+- **Data pipeline:** Python‑based service with scheduler (APScheduler) for World Bank GDP ingestion; S3‑compatible object storage via MinIO for future datasets.
 
 ## Tech Stack
 - **Frontend:** React (Vite), JavaScript, React Router, Redux Toolkit, D3.js, CSS.
 - **Backend:** Node.js, Express, PostgreSQL.
-- **Data Processing:** Python, PySpark (planned), Parquet, MinIO (S3‑compatible).
+- **Data Processing:** Python (APScheduler, requests, psycopg2), PySpark (planned), Parquet (planned), MinIO (S3‑compatible).
 - **Infrastructure:** Docker, Docker Compose, environment variables.
 
 ## Repository Structure
@@ -38,13 +38,22 @@ Note: Run commands from the repository root unless noted.
 ```bash
 docker compose up -d postgres backend
 ```
-2) Configure frontend API base:
-	 - Copy [frontend/.env.example](frontend/.env.example) to `.env` and set `VITE_API_URL`.
+2) Configure frontend env (optional):
+	 - Copy [frontend/.env.example](frontend/.env.example) to `.env`. By default, the frontend uses same-origin `/api` with a dev proxy.
+	 - Optionally set `VITE_API_BASE` (leave blank to use same-origin).
+	 - Optionally set `VITE_PROXY_TARGET` (defaults to `http://localhost:4000`).
 3) Run frontend:
 ```bash
 cd frontend
 npm install
 npm run dev
+```
+
+4) (Optional) Start the data pipeline and run the GDP job once:
+```bash
+docker compose up -d pipeline
+# To run all jobs immediately on container start (one‑off/backfill), set in data-pipeline/.env:
+# RUN_JOBS_ON_START=true
 ```
 
 ## Backend Service
@@ -55,6 +64,8 @@ npm run dev
 - Security middleware: [backend/src/middleware/security.js](backend/src/middleware/security.js)
 - Security middleware: [backend/src/middleware/security.js](backend/src/middleware/security.js)
 - Rate limiting: [backend/src/middleware/rateLimiter.js](backend/src/middleware/rateLimiter.js)
+ - Catalog module: [backend/src/modules/catalog/routes.js](backend/src/modules/catalog/routes.js)
+ - Charts module: [backend/src/modules/charts/routes.js](backend/src/modules/charts/routes.js)
 
 ### Implemented API Endpoints
 - `POST /api/auth/register` – Validates input, hashes passwords (Argon2id), issues access token + refresh cookie.
@@ -66,6 +77,8 @@ npm run dev
 - `PUT /api/users/me` – Updates whitelisted profile fields.
 - `POST /api/users/me/avatar` – Uploads avatar (multipart), stores in MinIO, returns presigned URL.
 - `GET /health` – Health check.
+ - `GET /api/catalog/countries` – Countries/aggregates catalog (World Bank), for dropdowns.
+ - `GET /api/charts/wb/gdp` – GDP series for one/more ISO3 codes; supports `variant=current`, `from`, `to`.
 
 ### Security Posture
 - **Passwords:** Argon2id with strong parameters.
@@ -99,25 +112,30 @@ Schema highlights:
 - `users` with email unique, password_hash, first_name, last_name, country, and profile fields.
 - `refresh_tokens` for allowlisting, rotation, and revocation (jti, hash, expires_at, ip, user_agent, rotated_at, revoked_at).
 - `users.avatar_key` + avatar metadata (for MinIO objects); `updated_at` auto‑updated via trigger.
+ - World Bank tables: `wb_countries`, `wb_indicator_annual` with indexes for chart queries. See [backend/migrations/0010_wb_schema.sql](backend/migrations/0010_wb_schema.sql).
 
 ## Frontend
-- `.env` format: `VITE_API_URL` pointing to backend (e.g., `http://localhost:4000`).
+- `.env` variables:
+	- `VITE_API_BASE` (optional): Explicit API base. Leave empty to use same-origin and rely on the dev proxy during development.
+	- `VITE_PROXY_TARGET` (optional): Vite dev server proxy target for `/api` (default `http://localhost:4000`).
 - Register: validates inputs, calls `/api/auth/register`, stores token+user, sets defaults for `timezone`/`locale`, redirects to Dashboard.
 - Login: validates inputs, calls `/api/auth/login`, stores token+user, redirects to Dashboard.
 - Profile: `GET /api/users/me` and global Edit mode with form; client‑side preview for avatar.
 - Session persistence: `AuthBootstrap` refreshes token on load; `apiClient` auto‑refreshes on 401 and preserves `FormData` headers on retry.
 - Navbar: avatar image + greeting (first name); dropdown actions.
 - Theme: CSS variables in `index.css` for unified dark palette.
+ - Dashboard: GDP card (World Bank) with country/region dropdown, legend, hover tooltip, and visualization selector (Nominal USD, YoY%). Styles consolidated in [frontend/src/css/Dashboard.css](frontend/src/css/Dashboard.css).
 
 ## Environment Configuration
-- **Frontend:** [frontend/.env.example](frontend/.env.example) → create `frontend/.env` with `VITE_API_URL`.
+- **Frontend:** [frontend/.env.example](frontend/.env.example) → create `frontend/.env` as needed. You can leave `VITE_API_BASE` empty and rely on the dev proxy; set `VITE_PROXY_TARGET` to point to your backend during development.
 - **Backend:** [backend/.env.example](backend/.env.example) → create `backend/.env` with DB settings; included by Docker.
+ - **Pipeline:** [data-pipeline/.env.example](data-pipeline/.env.example) → create `data-pipeline/.env` for optional overrides (e.g., `WB_BASE`, `WB_END_YEAR`, `RUN_JOBS_ON_START`).
 
 ## Docker Compose (Services)
 - **postgres:** `postgres:15`, exposed on host `5433`.
 - **minio:** S3‑compatible object storage (dev), console on `9001`.
 - **backend:** Node 18 image built from [backend/Dockerfile](backend/Dockerfile), exposed on `4000`.
-- **pipeline:** Python data processing (planned), depends on `postgres` + `minio`.
+- **pipeline:** Python ingestion service with APScheduler; depends on `postgres` + `minio`.
 
 Bring up core services (from repo root):
 ```bash
@@ -133,9 +151,6 @@ docker compose up -d --build backend
 - Test API quickly:
 ```bash
 curl -sS http://localhost:4000/health
-curl -sS -X POST http://localhost:4000/api/register \
-	-H "Content-Type: application/json" \
-	-d '{"email":"user@test.com","password":"Passw0rd123","first_name":"User","last_name":"Test","country":"RO"}'
 ```
 
 ## Author
@@ -146,11 +161,16 @@ Highlights:
 - Contact: dani.frunza@yahoo.com • GitHub: https://github.com/DanFrunza • LinkedIn: https://www.linkedin.com/in/dan-frunza-135695284/
 
 ## Roadmap
-- Expand datasets and visualizations (D3 dashboards).
-- Implement JWT auth (access + refresh) and protected routes.
-- Add data ingestion jobs and PySpark transformations.
-- Integrate MinIO for object storage and parquet flows.
+- Expand datasets and visualizations (more indicators, interactive dashboards).
+- Add PySpark transformations for batch processing.
+- Integrate MinIO parquet flows for curated datasets.
 - Improve CI/CD and add testing coverage.
 
 ## Contributing
+## Recent Update (Jan 2026)
+- Added data pipeline service with APScheduler and monthly World Bank GDP ingestion.
+- Introduced backend modules `catalog` and `charts` with endpoints: `/api/catalog/countries`, `/api/charts/wb/gdp`.
+- Implemented GDP card on Dashboard with country selector, legend, tooltip, and YoY visualization.
+- Frontend now uses same‑origin requests via Vite dev proxy (`/api`), with optional `VITE_API_BASE`. Removed localhost hardcoding.
+- Extended backend `.env.example` with `JWT_ACCESS_SECRET`, token TTLs, and MinIO settings; added World Bank schema migration.
 Pull requests and issues are welcome while the project is in active development. Please avoid committing secrets; use `.env.example` files for configuration.

@@ -1,0 +1,107 @@
+.dashboard {
+	padding: 20px;
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	color: white;
+	margin-top: 100px;
+}
+
+.dashboard section.card {
+	background-color: var(--color-surface);
+	padding: 20px;
+	border-radius: 8px;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard h1 {
+	margin: 0;
+	text-align: center;
+	font-size: 48px;
+}
+
+.dashboard .chart-card-inner {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: stretch;
+}
+
+.dashboard .chart-title {
+	margin: 0;
+	text-align: center;
+	font-size: 32px;
+}
+
+.dashboard .chart-controls {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.dashboard .chart-label {
+	font-size: 18px;
+	color: #ddd;
+}
+
+.dashboard .chart-select {
+	background: var(--color-surface);
+	color: white;
+	padding: 10px 12px;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	font-size: 18px;
+}
+
+.dashboard .chart-area {
+	width: 100%;
+}
+
+.dashboard .chart-status {
+	text-align: center;
+	color: #aaa;
+}
+
+.dashboard .chart-status.error {
+	color: salmon;
+}
+
+.dashboard .chart-status.subtle {
+	color: #888;
+	margin-top: 6px;
+}
+
+.dashboard .chart-legend {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.dashboard .chart-legend .legend-dot {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--color-accent);
+}
+
+.dashboard .chart-legend .legend-text {
+	color: #ddd;
+	font-size: 16px;
+}
+

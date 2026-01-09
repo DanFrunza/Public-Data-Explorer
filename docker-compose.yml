@@ -30,6 +30,7 @@ services:
 
   pipeline:
     build: ./data-pipeline
+    env_file: ./data-pipeline/.env
     depends_on:
       - postgres
       - minio

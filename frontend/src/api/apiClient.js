@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL;
+// Use same-origin by default; override with VITE_API_BASE when needed
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 // Normalized error type
 function normalizeError(status, message, details) {

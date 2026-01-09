@@ -8,4 +8,4 @@ WORKDIR /app
 COPY . /app
 
 # Keep container running until a pipeline script is added
-CMD ["sleep", "infinity"]
+CMD ["python", "orchestrator.py"]

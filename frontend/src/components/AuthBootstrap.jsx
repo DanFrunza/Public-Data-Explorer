@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials, setAuthStatus } from '../store/slices/authSlice';
 
-const API_BASE = import.meta.env.VITE_API_URL;
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 export default function AuthBootstrap() {
   const dispatch = useDispatch();

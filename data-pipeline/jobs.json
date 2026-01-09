@@ -1,0 +1,15 @@
+{
+  "jobs": [
+    {
+      "id": "wb_gdp_current",
+      "module": "ingestors.wb_gdp",
+      "function": "run",
+      "cron": "0 6 1 * *",
+      "params": {
+        "indicator_code": "NY.GDP.MKTP.CD",
+        "start_year": 1990
+      },
+      "description": "World Bank GDP (current USD) for all countries; runs monthly"
+    }
+  ]
+}

@@ -17,6 +17,10 @@ app.get('/health', (_, res) => {
 app.use('/api/auth', authModule.router);
 // Users module (avatar upload + url)
 app.use('/api/users', require('./modules/users/routes'));
+// Catalog (countries list, metadata)
+app.use('/api/catalog', require('./modules/catalog/routes'));
+// Charts (curated data for graphs)
+app.use('/api/charts', require('./modules/charts/routes'));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
