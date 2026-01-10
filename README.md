@@ -173,4 +173,19 @@ Highlights:
 - Implemented GDP card on Dashboard with country selector, legend, tooltip, and YoY visualization.
 - Frontend now uses same‑origin requests via Vite dev proxy (`/api`), with optional `VITE_API_BASE`. Removed localhost hardcoding.
 - Extended backend `.env.example` with `JWT_ACCESS_SECRET`, token TTLs, and MinIO settings; added World Bank schema migration.
+- Chart export: Added PNG, SVG, CSV, JPEG, WebP, and JSON exports with scale/background options. Removed vulnerable XLSX export (`xlsx` package) and removed the clipboard Copy feature.
+- Security & deps: Audited frontend dependencies; removed `xlsx` due to advisories GHSA‑4r6h‑8v6p‑xvw6 and GHSA‑5pgg‑2g8v‑p4x9. Clipboard API usage was removed from charts.
+- Repo hygiene: Ensured `node_modules` are ignored and not committed; standardized `.env.example` files.
+
+## Hosting & Domains (Planned)
+- Frontend: Cloudflare Pages (or GitHub Pages) at `www.danfrunza.me`.
+- Backend: Render/Koyeb/Railway at `api.danfrunza.me`.
+- Database: Neon or Supabase (PostgreSQL).
+- Object storage: Cloudflare R2 or Supabase Storage.
+- Cookies/CORS: Subdomain setup allows httpOnly refresh cookie; restrict CORS via env allowlist.
+
+## Frontend Chart Export (GDP Card)
+- Supported formats: PNG, SVG, CSV, JPEG, WebP, JSON.
+- Options: scale (1x/2x/3x) for raster; background (transparent/surface/bg) for PNG/WebP.
+- Note: Clipboard Copy and XLSX export were removed. Use CSV/JSON for spreadsheet workflows.
 Pull requests and issues are welcome while the project is in active development. Please avoid committing secrets; use `.env.example` files for configuration.

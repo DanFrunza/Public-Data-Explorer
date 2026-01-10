@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, forwardRef } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from '../../store/slices/authSlice';
 
 // Use same-origin by default (via dev proxy); override with VITE_API_BASE when needed
 const API_BASE = import.meta.env.VITE_API_BASE || '';
@@ -49,7 +51,7 @@ function useCountries() {
   return { ...data, groups };
 }
 
-function LineChart({ series, width = 640, height = 300, valueFormatter = numberFormat }) {
+const LineChart = forwardRef(function LineChart({ series, width = 640, height = 300, valueFormatter = numberFormat }, svgRef) {
   const margin = { top: 16, right: 24, bottom: 30, left: 48 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
@@ -105,7 +107,7 @@ function LineChart({ series, width = 640, height = 300, valueFormatter = numberF
   };
 
   return (
-    <svg width="100%" viewBox={`0 0 ${width} ${height}`} role="img">
+    <svg ref={svgRef} width="100%" viewBox={`0 0 ${width} ${height}`} role="img" data-export-width={width} data-export-height={height}>
       {/* axes */}
       <line x1={margin.left} y1={margin.top} x2={margin.left} y2={height - margin.bottom} stroke="#555"/>
       <line x1={margin.left} y1={height - margin.bottom} x2={width - margin.right} y2={height - margin.bottom} stroke="#555"/>
@@ -150,9 +152,180 @@ function LineChart({ series, width = 640, height = 300, valueFormatter = numberF
             onMouseMove={onMove} onMouseLeave={() => setHover(null)} />
     </svg>
   );
+});
+
+// --- Export helpers ---
+function serializeSvg(svgEl) {
+  const clone = svgEl.cloneNode(true);
+  // Ensure inline styles are preserved; set xmlns for standalone SVG
+  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  // Resolve CSS variables (e.g., --color-accent) to concrete values so strokes/fills appear in exports
+  try {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const svgStyles = getComputedStyle(svgEl);
+    const accentRaw = svgStyles.getPropertyValue('--color-accent') || rootStyles.getPropertyValue('--color-accent') || '#4ea1f0';
+    const accent = String(accentRaw).trim() || '#4ea1f0';
+    // Set CSS var directly on the cloned svg element
+    clone.style.setProperty('--color-accent', accent);
+    // Also rewrite any stroke/fill attributes that reference CSS variables to concrete color
+    const rewriteColorAttr = (el) => {
+      const stroke = el.getAttribute('stroke');
+      if (stroke && stroke.includes('var(')) {
+        el.setAttribute('stroke', accent);
+      }
+      const fill = el.getAttribute('fill');
+      if (fill && fill.includes('var(')) {
+        el.setAttribute('fill', accent);
+      }
+    };
+    clone.querySelectorAll('*').forEach(rewriteColorAttr);
+  } catch { /* no-op */ }
+  const serializer = new XMLSerializer();
+  return serializer.serializeToString(clone);
+}
+
+async function exportSVG(svgEl, filename = 'chart.svg') {
+  const svgText = serializeSvg(svgEl);
+  const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+async function exportPNG(svgEl, filename = 'chart.png', background = 'transparent', scale = 1, quality = 0.92) {
+  const width = Number(svgEl.getAttribute('data-export-width')) || 640;
+  const height = Number(svgEl.getAttribute('data-export-height')) || 300;
+  const svgText = serializeSvg(svgEl);
+  const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+  const svgUrl = URL.createObjectURL(svgBlob);
+  try {
+    const img = new Image();
+    img.decoding = 'async';
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    const alpha = background === 'transparent';
+    const ctx = canvas.getContext('2d', { alpha });
+    // Optional background fill
+    if (background && background !== 'transparent') {
+      const root = getComputedStyle(document.documentElement);
+      let bgColor = '#000000';
+      if (background === 'surface') {
+        bgColor = (root.getPropertyValue('--color-surface') || '#151A2E').trim();
+      } else if (background === 'bg') {
+        bgColor = (root.getPropertyValue('--color-bg') || '#0D1220').trim();
+      } else if (/^#|rgb\(/.test(background)) {
+        bgColor = background; // direct color string if provided
+      }
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    // Await image load
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = svgUrl;
+    });
+    // Draw scaled for crisp output
+    ctx.scale(Math.max(1, scale), Math.max(1, scale));
+    ctx.drawImage(img, 0, 0, width, height);
+    const dataUrl = canvas.toDataURL('image/png', quality);
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } finally {
+    URL.revokeObjectURL(svgUrl);
+  }
+}
+
+async function exportJPEG(svgEl, filename = 'chart.jpg', background = 'surface', scale = 1, quality = 0.92) {
+  // JPEG does not support transparency; use surface fill by default
+  return exportPNG(svgEl, filename, background, scale, quality);
+}
+
+async function exportWebP(svgEl, filename = 'chart.webp', background = 'transparent', scale = 1, quality = 0.92) {
+  const width = Number(svgEl.getAttribute('data-export-width')) || 640;
+  const height = Number(svgEl.getAttribute('data-export-height')) || 300;
+  const svgText = serializeSvg(svgEl);
+  const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+  const svgUrl = URL.createObjectURL(svgBlob);
+  try {
+    const img = new Image();
+    img.decoding = 'async';
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    const alpha = background === 'transparent';
+    const ctx = canvas.getContext('2d', { alpha });
+    if (background && background !== 'transparent') {
+      const root = getComputedStyle(document.documentElement);
+      let bgColor = (root.getPropertyValue('--color-surface') || '#151A2E').trim();
+      if (background === 'bg') {
+        bgColor = (root.getPropertyValue('--color-bg') || '#0D1220').trim();
+      } else if (/^#|rgb\(/.test(background)) {
+        bgColor = background;
+      }
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = svgUrl;
+    });
+    ctx.scale(Math.max(1, scale), Math.max(1, scale));
+    ctx.drawImage(img, 0, 0, width, height);
+    const dataUrl = canvas.toDataURL('image/webp', quality);
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } finally {
+    URL.revokeObjectURL(svgUrl);
+  }
+}
+
+
+function exportJSON(series, meta, filename = 'chart.json') {
+  const payload = { meta, series };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+
+function exportCSV(series, filename = 'chart.csv') {
+  const rows = [['year', 'value']].concat((series || []).map(d => [d.year, d.value]));
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 export default function GdpCard() {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const { countries, loading, error, groups } = useCountries();
   const defaultCode = useMemo(() => {
     const ro = countries.find(c => c.iso3 === 'ROU');
@@ -162,6 +335,9 @@ export default function GdpCard() {
   const [series, setSeries] = useState([]);
   const [fetching, setFetching] = useState(false);
   const [viz, setViz] = useState('current'); // current | yoy
+  const [exportFmt, setExportFmt] = useState(''); // '', 'png', 'svg', 'csv', 'jpeg', 'webp', 'json', 'xlsx'
+  const [exportPngBg, setExportPngBg] = useState('transparent'); // 'transparent' | 'surface' | 'bg'
+  const [exportScale, setExportScale] = useState(1); // 1 | 2 | 3
 
   useEffect(() => {
     if (defaultCode && !code) setCode(defaultCode);
@@ -202,6 +378,40 @@ export default function GdpCard() {
 
   const selected = useMemo(() => countries.find(c => c.iso3 === code), [countries, code]);
 
+  const svgRef = useRef(null);
+
+  const handleExport = () => {
+    if (!exportFmt) return;
+    const meta = {
+      country: selected?.name || code,
+      code,
+      viz,
+      units: viz === 'current' ? 'current USD' : 'YoY %',
+      source: 'World Bank GDP',
+      from: series?.[0]?.year,
+      to: series?.[series.length - 1]?.year,
+    };
+    if (exportFmt === 'png') {
+      if (!svgRef.current) return;
+      exportPNG(svgRef.current, `gdp_${code}_${viz}.png`, exportPngBg, exportScale);
+    } else if (exportFmt === 'svg') {
+      if (!svgRef.current) return;
+      exportSVG(svgRef.current, `gdp_${code}_${viz}.svg`);
+    } else if (exportFmt === 'csv') {
+      exportCSV(series, `gdp_${code}_${viz}.csv`);
+    } else if (exportFmt === 'jpeg') {
+      if (!svgRef.current) return;
+      exportJPEG(svgRef.current, `gdp_${code}_${viz}.jpg`, 'surface', exportScale);
+    } else if (exportFmt === 'webp') {
+      if (!svgRef.current) return;
+      exportWebP(svgRef.current, `gdp_${code}_${viz}.webp`, exportPngBg, exportScale);
+    } else if (exportFmt === 'json') {
+      exportJSON(series, meta, `gdp_${code}_${viz}.json`);
+    } else if (exportFmt === 'xlsx') {
+    }
+  };
+
+
   return (
     <div className="chart-card-inner">
       <h2 className="chart-title">GDP (World Bank)</h2>
@@ -234,6 +444,63 @@ export default function GdpCard() {
           <option value="current">Nominal (current USD)</option>
           <option value="yoy">Growth YoY (%)</option>
         </select>
+        {isAuthenticated && (
+          <div className="chart-export">
+            <label htmlFor="export-format" className="chart-label">Export:</label>
+            <select
+              id="export-format"
+              value={exportFmt}
+              onChange={(e) => setExportFmt(e.target.value)}
+              className="chart-select"
+            >
+              <option value="">Select format</option>
+              <option value="png">PNG</option>
+              <option value="svg">SVG</option>
+              <option value="csv">CSV</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WebP</option>
+              <option value="json">JSON</option>
+            </select>
+            {exportFmt === 'png' && (
+              <>
+                <label htmlFor="png-bg" className="chart-label">Background:</label>
+                <select
+                  id="png-bg"
+                  value={exportPngBg}
+                  onChange={(e) => setExportPngBg(e.target.value)}
+                  className="chart-select"
+                >
+                  <option value="transparent">Transparent</option>
+                  <option value="surface">Card Surface</option>
+                  <option value="bg">Page Background</option>
+                </select>
+              </>
+            )}
+            {(exportFmt === 'png' || exportFmt === 'jpeg' || exportFmt === 'webp') && (
+              <>
+                <label htmlFor="scale" className="chart-label">Scale:</label>
+                <select
+                  id="scale"
+                  value={exportScale}
+                  onChange={(e) => setExportScale(Number(e.target.value))}
+                  className="chart-select"
+                >
+                  <option value={1}>1x</option>
+                  <option value={2}>2x</option>
+                  <option value={3}>3x</option>
+                </select>
+              </>
+            )}
+            <button
+              className="chart-button"
+              type="button"
+              disabled={!exportFmt || (!svgRef.current && (exportFmt === 'png' || exportFmt === 'svg' || exportFmt === 'jpeg' || exportFmt === 'webp'))}
+              onClick={handleExport}
+            >
+              Export
+            </button>
+          </div>
+        )}
       </div>
       <div className="chart-area">
         {loading ? (
@@ -242,7 +509,7 @@ export default function GdpCard() {
           <div className="chart-status error">Failed to load countries</div>
         ) : (
           <>
-            <LineChart series={series} valueFormatter={viz === 'yoy' ? percentFormat : numberFormat} />
+            <LineChart ref={svgRef} series={series} valueFormatter={viz === 'yoy' ? percentFormat : numberFormat} />
             <div className="chart-legend">
               <span className="legend-dot" />
               <span className="legend-text">{selected?.name || code} • {viz === 'current' ? 'current USD' : 'YoY %'}</span>

@@ -1,16 +1,46 @@
-# React + Vite
+# Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React application for Public Data Explorer. It renders the dashboard, charts, and account pages. Uses Vite for fast dev, React Router for navigation, and Redux Toolkit for auth/session state.
 
-Currently, two official plugins are available:
+## Quickstart
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## React Compiler
+Open http://localhost:5173. The dev server proxies `/api` to the backend by default.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Environment Variables
 
-## Expanding the ESLint configuration
+- `VITE_API_BASE` (optional): Explicit API base. Leave empty to use same-origin `/api` with dev proxy.
+- `VITE_PROXY_TARGET` (optional): Backend target for dev proxy (defaults to `http://localhost:4000`).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `.env.example` to `.env` if customizing.
+
+## Dashboard: GDP Card
+
+Interactive line chart with country/region selector and visualization switcher (Nominal USD, YoY%).
+
+### Export Options
+- Formats: PNG, SVG, CSV, JPEG, WebP, JSON.
+- PNG/WebP: background (transparent/surface/bg) and scale (1x/2x/3x).
+- Notes:
+	- Clipboard Copy feature was removed.
+	- XLSX export was removed due to security advisories. Use CSV/JSON for spreadsheets.
+
+## Styling
+Unified dark theme via CSS variables in `src/index.css`. Component styles in `src/css/`.
+
+## Linting
+```bash
+npm run lint
+```
+
+## Build
+```bash
+npm run build
+```
+
+Outputs production assets under `dist/`.

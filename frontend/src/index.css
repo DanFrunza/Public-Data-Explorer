@@ -5,14 +5,21 @@
   --color-surface-muted: #0F1426;   /* inputs/secondary blocks */
   --color-text: #E6EAF2;            /* primary text */
   --color-border: #2A3350;          /* subtle borders */
+  --color-border-translucent: rgba(255, 255, 255, 0.10); /* light border on dark */
   --color-dropdown-bg: #FFFFFF;     /* dropdown surfaces */
   --color-dropdown-text: #111827;   /* dropdown text */
   --color-dropdown-hover: #F3F4F6;  /* dropdown hover */
   --color-accent: #8B5CF6;          /* brand accent */
   --color-accent-2: #7C3AED;        /* buttons/accent strong */
   --color-chart-primary: #60A5FA;   /* chart lines/bars */
-  --color-neutral-light: #D1D5DB;   /* muted text/lines */
+  --color-neutral-light: #D1D5DB;   /* muted text/lines (≈ #ddd) */
+  --color-neutral-mid: #9CA3AF;     /* mid muted (≈ #aaa) */
+  --color-neutral-dark: #6B7280;    /* dark muted (≈ #888) */
   --color-error: #EF4444;           /* errors */
+
+  /* Shadows */
+  --shadow-soft: 0 4px 8px rgba(0, 0, 0, 0.20);
+  --shadow-strong: 0 8px 16px rgba(0, 0, 0, 0.20);
 }
 
 body {
