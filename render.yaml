@@ -2,6 +2,7 @@ services:
   - type: web
     name: public-data-explorer-backend
     env: node
+    rootDir: backend
     region: frankfurt
     plan: free
     buildCommand: npm install
