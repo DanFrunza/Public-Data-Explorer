@@ -47,10 +47,12 @@ async function issueRefresh(user, req) {
 
 function buildRefreshCookieOptions(expires_at) {
   const isProd = process.env.NODE_ENV === 'production';
+  // For cross-origin (GitHub Pages -> backend), cookies must be SameSite=None and Secure
+  const sameSite = isProd ? 'None' : 'Lax';
   return {
     httpOnly: true,
-    secure: isProd, // allow insecure in dev on localhost
-    sameSite: 'Lax',
+    secure: isProd,
+    sameSite,
     path: '/api/auth/refresh',
     expires: expires_at,
   };
