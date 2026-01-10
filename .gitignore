@@ -1,0 +1,45 @@
+# --- General secrets ---
+.env
+**/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+
+# --- Node.js ---
+node_modules/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Build outputs ---
+frontend/dist/
+frontend/dist-ssr/
+dist/
+backend/dist/
+
+# --- Python (data-pipeline) ---
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+data-pipeline/.venv/
+
+# --- Editor/OS ---
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Internal docs (do not push) ---
+INTERNAL_PROJECT_DOCUMENTATION.md
+Test Assets/
+
+# --- Local auth/cookie jars ---
+cookies.txt
+login.json
+refresh.json

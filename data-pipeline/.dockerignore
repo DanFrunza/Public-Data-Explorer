@@ -1,0 +1,12 @@
+# Python image hygiene
+.env
+.env.*
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.git/
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db

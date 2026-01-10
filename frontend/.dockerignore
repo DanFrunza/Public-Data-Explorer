@@ -1,0 +1,11 @@
+# Frontend image hygiene
+.env
+.env.*
+node_modules/
+.dist/
+dist/
+.git/
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
