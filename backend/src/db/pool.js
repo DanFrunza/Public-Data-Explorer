@@ -1,12 +1,16 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
+// Enforce Supabase via DATABASE_URL only
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error('DATABASE_URL is required for backend database connection');
+}
+
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: 5432,
+  connectionString: databaseUrl,
+  ssl: { rejectUnauthorized: false },
 });
 
 module.exports = pool;

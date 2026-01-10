@@ -6,15 +6,33 @@ import requests
 import psycopg2
 import psycopg2.extras
 
-WB_BASE = os.environ.get('WB_BASE', 'https://api.worldbank.org/v2')
+# Allow empty env to fall back to default
+WB_BASE = os.environ.get('WB_BASE') or 'https://api.worldbank.org/v2'
 
 
 def db_conn():
-    host = os.environ.get('DB_HOST', 'postgres')
-    user = os.environ.get('DB_USER', 'postgres')
-    password = os.environ.get('DB_PASS', 'postgres')
-    dbname = os.environ.get('DB_NAME', 'public_data')
-    return psycopg2.connect(host=host, user=user, password=password, dbname=dbname)
+    # Require Supabase Session Pooler via DATABASE_URL; no local fallback
+    dsn = os.environ.get('DATABASE_URL')
+    if not dsn:
+        raise SystemExit('DATABASE_URL is required for pipeline ingestion.')
+    if 'sslmode=' not in dsn:
+        # Ensure SSL is required for Supabase
+        sep = '&' if '?' in dsn else '?'
+        dsn = f"{dsn}{sep}sslmode=require"
+    return psycopg2.connect(dsn)
+
+def _print_db_diagnostics(conn, masked_target: str):
+    try:
+        with conn.cursor() as cur:
+            cur.execute('SELECT current_database(), current_user, inet_server_addr(), version()')
+            db, user, addr, ver = cur.fetchone()
+            print('[pipeline-db] target:', masked_target)
+            print('[pipeline-db] current_database:', db)
+            print('[pipeline-db] user:', user)
+            print('[pipeline-db] server addr:', addr)
+            print('[pipeline-db] version:', (ver or '').split('\n')[0])
+    except Exception as e:
+        print('[pipeline-db] diagnostics failed:', e)
 
 
 def fetch_json(url: str):
@@ -123,10 +141,29 @@ def upsert_indicator_annual(conn, indicator_code: str, records: Iterable[dict]):
 
 
 def run(indicator_code: str = 'NY.GDP.MKTP.CD', start_year: int = 1990, end_year: int | None = None):
-    end_year = end_year or int(os.environ.get('WB_END_YEAR', '0')) or int(time.strftime('%Y'))
+    # Resolve end_year: cli arg > env > current year; tolerate empty/invalid env
+    env_end = os.environ.get('WB_END_YEAR', '').strip()
+    env_end_int = None
+    try:
+        env_end_int = int(env_end) if env_end else None
+    except ValueError:
+        env_end_int = None
+    end_year = end_year or env_end_int or int(time.strftime('%Y'))
 
     conn = db_conn()
     try:
+        # Safe diagnostics similar to backend migrations (mask password)
+        raw_dsn = os.environ.get('DATABASE_URL', '')
+        masked = raw_dsn
+        if '://' in masked and '@' in masked:
+            pre, post = masked.split('://', 1)
+            userpass, rest = post.split('@', 1)
+            if ':' in userpass:
+                user, _ = userpass.split(':', 1)
+                masked = f"{pre}://{user}:***@{rest}"
+        _print_db_diagnostics(conn, masked)
+        print(f"[pipeline] WB_BASE: {WB_BASE}")
+
         iso3_list = load_countries(conn)
         total = 0
         for group in chunk(iso3_list, 60):
