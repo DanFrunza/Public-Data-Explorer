@@ -6,42 +6,39 @@ const Home = () => {
     <main className="home">
       <section className="TitleCard">
         <h1>Public Data Explorer</h1>
-        <h2>Interactive visualizations for understanding real-world data</h2>
-        <p>Public Data Explorer is an educational platform focused on exploring and visualizing large public datasets using modern web technologies.</p>
-      </section>
-
-      <section className="card">
-        <h2>What is Public Data Explorer?</h2>
+        <h2>Discover public data, simply and interactively</h2>
         <p>
-          Public data is often complex, fragmented, and difficult to interpret.
-          This project transforms raw datasets into clear, interactive visualizations that make data easier to explore and understand.
+          A free site for visualizing and exploring public datasets (e.g. economy, population, education) through clear, interactive charts.
         </p>
       </section>
 
       <section className="card">
-        <h2>WHAT YOU CAN EXPLORE</h2>
+        <h2>What can you do here?</h2>
         <ul>
-          <li>Interactive dashboards built with D3.js</li>
-          <li>Exploration of public datasets (population, economy, education, etc.)</li>
-          <li>Clean and responsive UI</li>
-          <li>Scalable data processing pipelines</li>
-          <li>A structured backend API for data access</li>
+          <li>
+            <a href="#/dashboard">Dashboard</a> – view charts and explore real data
+          </li>
+          <li>
+            <a href="#/register">Create an account</a> or <a href="#/login">log in</a> to save preferences and export charts
+          </li>
+          <li>
+            <a href="#/about">About</a> – technical details and project motivation
+          </li>
+          <li>
+            <a href="#/faq">FAQ</a> – quick answers
+          </li>
         </ul>
-        <p>Some features are still under development, as this is an evolving project.</p>
       </section>
 
       <section className="card">
-        <h2>CLOSING / CALL TO ACTION</h2>
-        <h3>Project status</h3>
-        <p>Public Data Explorer is an ongoing project and will continue to evolve over time.
-          New datasets, visualizations, and features will be added progressively.
+        <h2>Good to know</h2>
+        <p>
+          This site is <b>free</b> and has no subscriptions – I originally planned premium plans, but decided to keep it open for everyone. If you want to support the project, donation options may be added in the future.
         </p>
         <p>
-          This platform serves both as a learning environment and a portfolio project demonstrating modern web and data engineering practices.
+          Built by a passionate student as a portfolio and learning project. Anyone can use the platform to learn or explore real-world data.
         </p>
-        
       </section>
-      
     </main>
   );
 }
