@@ -3,12 +3,16 @@ const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
 
+// Require DATABASE_URL (Supabase Session Pooler). No local fallback.
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  console.error('DATABASE_URL is required for migrations.');
+  process.exit(1);
+}
+
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: 5432,
+  connectionString,
+  ssl: { rejectUnauthorized: false },
 });
 
 async function ensureMigrationsTable(client) {
@@ -44,6 +48,18 @@ async function applyMigration(client, filePath, name) {
 async function run() {
   const client = await pool.connect();
   try {
+    // Diagnostics: confirm which DB we're connected to (no secrets leaked)
+    const diag = await client.query(
+      'SELECT current_database() AS db, current_user AS user, inet_server_addr() AS server, version() AS ver'
+    );
+    const info = diag.rows[0] || {};
+    const masked = connectionString.replace(/:\w+@/, ':***@');
+    console.log('DB connection target:', masked);
+    console.log('DB current_database:', info.db);
+    console.log('DB user:', info.user);
+    console.log('DB server addr:', info.server);
+    console.log('DB version:', (info.ver || '').split('\n')[0]);
+
     const migrationsDir = path.join(__dirname, '..', 'migrations');
     if (!fs.existsSync(migrationsDir)) {
       console.log('No migrations directory found. Nothing to do.');
