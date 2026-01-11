@@ -1,46 +1,67 @@
+@media (min-width: 1100px) {
+  .register form {
+    padding: 32px 36px;
+    gap: 28px;
+  }
+  .register h1 {
+    font-size: 2.8rem;
+  }
+  .register .form-group label {
+    font-size: 1.3rem;
+  }
+  .register .form-group input,
+  .register button {
+    font-size: 1.3rem;
+    padding: 14px 18px;
+  }
+  .register .error,
+  .register #register-link {
+    font-size: 1.1rem;
+  }
+}
 .register {
-    padding: 20px;
-    width: 60%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text);
-    margin-top: 100px;
+  padding: 16px;
+  width: 95%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  margin-top: 80px;
 }
 
 .register form{
-    background-color: var(--color-surface);
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid var(--color-border-translucent);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-strong);
+  background-color: var(--color-surface);
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border-translucent);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-strong);
 }
 
 .register .form-group {
   display: flex;
   flex-direction: column; 
-  width: 80%; 
+  width: 100%; 
 }
 
 .register .form-group label {
-  margin-bottom: 6px; 
+  margin-bottom: 4px; 
   font-weight: 600;
 }
 
 .register .form-group input {
-  padding: 10px;
-  font-size: 16px;
+  padding: 8px;
+  font-size: 1rem;
   border: 1px solid var(--color-border);  
   border-radius: 6px;
   width: 100%;  
@@ -48,24 +69,23 @@
   background-color: var(--color-surface-muted); 
   color: var(--color-text);
   outline: none;
-  background-color: var(--color-surface-muted);
 }
 
 .register .error {
   color: var(--color-error);
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 0.95rem;
+  margin-top: 2px;
   align-self: center; 
 }
 
 .register fieldset {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border: none;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .register input:-webkit-autofill,
@@ -78,20 +98,42 @@
 }
 
 .register button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 16px;
+    font-size: 1rem;
     background-color: var(--color-accent-2);
     color: var(--color-text);
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .register #register-link {
     color: var(--color-text);
     text-decoration: none;
-    font-size: 14px;
-    margin-top: 10px;
+    font-size: 0.95rem;
+    margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+  .register {
+    width: 100%;
+    padding: 8px;
+    margin-top: 60px;
+    gap: 20px;
+  }
+  .register form {
+    padding: 8px;
+    gap: 6px;
+  }
+  .register .form-group input,
+  .register button {
+    font-size: 0.95rem;
+    padding: 6px 8px;
+  }
+  .register .error,
+  .register #register-link {
+    font-size: 0.9rem;
+  }
 }

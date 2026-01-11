@@ -1,84 +1,105 @@
+@media (min-width: 1100px) {
+  .profile section.card {
+    padding: 32px 36px;
+    gap: 28px;
+  }
+  .profile h1 {
+    font-size: 2.8rem;
+  }
+  .profile h2 {
+    font-size: 2rem;
+  }
+  .profile h3 {
+    font-size: 1.5rem;
+  }
+  .profile section.card .form-grid,
+  .profile section.card ul {
+    font-size: 1.3rem;
+    gap: 18px;
+  }
+  .profile section.card .form-grid input,
+  .profile section.card .form-grid select,
+  .profile section.card .form-grid textarea {
+    font-size: 1.3rem;
+    padding: 14px 18px;
+  }
+  .profile section #avatar-container img {
+    width: 180px;
+    height: 180px;
+    margin-left: 40px;
+  }
+}
+
 .profile {
-    padding: 20px;
-    width: 80%;
+    padding: 16px;
+    width: 95%;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 40px;
     align-items: center;
     justify-content: center;
     color: var(--color-text);
-    margin-top: 100px;
+    margin-top: 80px;
 }
-
 .profile #profile-data {
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 40px;
 }
-
 .profile section.card{
     background-color: var(--color-surface);
-    padding: 20px;
-    border-radius: 10px;
+    padding: 16px;
+    border-radius: 8px;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 8px;
     border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     align-items: flex-start;
     justify-content: flex-start;
     box-shadow: var(--shadow-strong);
 }
-
 .profile h1 {
-    font-size: 54px;
+    font-size: 2.2rem;
     margin: 0;
 }
-
 .profile h2 {
-    font-size: 36px;
+    font-size: 1.4rem;
     margin: 0;
 }
-
 .profile h3 {
-    font-size: 32px;
+    font-size: 1.2rem;
     margin: 0;
 }
-
 .profile section.card ul {
-    font-size: 26px;
+    font-size: 1.1rem;
     margin: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     justify-content: center;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-
+    gap: 12px;
 }
-
-/* Make the edit form visually match the list layout */
 .profile section.card .form-grid {
-    font-size: 26px;
+    font-size: 1.1rem;
     margin: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.profile section.card .form-grid label {
+    margin-top: 8px;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+.profile section.card .form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     color: var(--color-text);
 }
-
 .profile section.card .form-grid input,
 .profile section.card .form-grid select,
 .profile section.card .form-grid textarea {
@@ -88,27 +109,66 @@
     color: var(--color-text);
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 26px;
+    padding: 8px 10px;
+    font-size: 1.1rem;
 }
-
 .profile section.card .form-grid input:focus,
 .profile section.card .form-grid select:focus,
 .profile section.card .form-grid textarea:focus {
     outline: none;
     border-color: var(--color-accent);
 }
-
 .profile section.card li {
     list-style-type: none;
 }
-
 .profile section #avatar-container img {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--color-text);
     align-self: center;
-    margin-left: 40px;
+    margin-left: 20px;
+}
+
+@media (max-width: 700px) {
+  .profile {
+    width: 100%;
+    padding: 8px;
+    margin-top: 60px;
+    gap: 10px;
+  }
+  .profile #profile-data {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .profile section.card {
+    padding: 6px;
+    gap: 4px;
+  }
+  .profile h1 {
+    font-size: 1.3rem;
+  }
+  .profile h2 {
+    font-size: 1.1rem;
+  }
+  .profile h3 {
+    font-size: 1rem;
+  }
+  .profile section.card .form-grid,
+  .profile section.card ul {
+    font-size: 0.98rem;
+    gap: 6px;
+  }
+  .profile section.card .form-grid input,
+  .profile section.card .form-grid select,
+  .profile section.card .form-grid textarea {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+  }
+  .profile section #avatar-container img {
+    width: 80px;
+    height: 80px;
+    margin-left: 0;
+  }
 }

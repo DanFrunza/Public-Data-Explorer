@@ -1,80 +1,130 @@
+@media (min-width: 1100px) {
+        .home section.card, .home section.TitleCard {
+                padding: 32px 36px;
+                gap: 28px;
+        }
+        .home section.TitleCard h1 {
+                font-size: 2.8rem;
+        }
+        .home section.TitleCard h2,
+        .home section.card h2 {
+                font-size: 2rem;
+        }
+        .home section.card h3 {
+                font-size: 1.5rem;
+        }
+        .home section.card p,
+        .home section.card ul,
+        .home section.TitleCard p {
+                font-size: 1.3rem;
+                gap: 18px;
+        }
+}
 .home {
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text);
-    margin-top: 100px;
+        padding: 16px;
+        width: 95%;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text);
+        margin-top: 80px;
 }
 
 .home section.card, .home section.TitleCard{
-    background-color: var(--color-surface);
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid var(--color-border-translucent);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-strong);
+        background-color: var(--color-surface);
+        padding: 16px;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--color-border-translucent);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-strong);
 }
 
 .home section.TitleCard h1 {
-    font-size: 54px;
-    margin: 0;
+        font-size: 2.2rem;
+        margin: 0;
 }
 
 .home section.TitleCard h2 {
-    font-size: 36px;
-    margin: 0;
-    font-weight: normal;
-    margin-top: 10px;
-    margin-bottom: 20px;
+        font-size: 1.4rem;
+        margin: 0;
+        font-weight: normal;
+        margin-top: 8px;
+        margin-bottom: 14px;
 }
 
 .home section.TitleCard p {
-    font-size: 26px;
-    margin: 0;
-    text-align: center;
+        font-size: 1.1rem;
+        margin: 0;
+        text-align: center;
 }
 
 .home section.card h2 {
-    font-size: 36px;
-    margin: 0;
+        font-size: 1.4rem;
+        margin: 0;
 }
 
 .home section.card h3 {
-    font-size: 32px;
-    margin: 0;
+        font-size: 1.2rem;
+        margin: 0;
 }
 
 .home section.card p {
-    font-size: 26px;
-    margin: 0;
-    text-align: center;
-    margin-top: 10px;
+        font-size: 1.1rem;
+        margin: 0;
+        text-align: center;
+        margin-top: 8px;
 }
 
 .home section.card ul {
-    font-size: 26px;
-    margin: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+        font-size: 1.1rem;
+        margin: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
 }
 
 .home section.card a {
     color: var(--color-accent);
     text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .home {
+        width: 100%;
+        padding: 8px;
+        margin-top: 60px;
+                gap: 12px;
+    }
+        .home section.card, .home section.TitleCard {
+                padding: 6px;
+                gap: 4px;
+    }
+    .home section.TitleCard h1 {
+        font-size: 1.3rem;
+    }
+    .home section.TitleCard h2,
+    .home section.card h2 {
+        font-size: 1.1rem;
+    }
+    .home section.card h3 {
+        font-size: 1rem;
+    }
+    .home section.TitleCard p,
+    .home section.card p,
+    .home section.card ul {
+        font-size: 0.98rem;
+    }
 }

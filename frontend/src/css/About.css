@@ -1,80 +1,121 @@
-.about {
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text);
-    margin-top: 100px;
-}
+    @media (min-width: 1100px) {
+      .about section.card, .about section.TitleCard {
+        padding: 32px 36px;
+        gap: 28px;
+      }
+      .about section.TitleCard h1 {
+        font-size: 2.8rem;
+      }
+      .about section.TitleCard h2,
+      .about section.card h2 {
+        font-size: 2rem;
+      }
+      .about section.card h3 {
+        font-size: 1.5rem;
+      }
+      .about section.card p,
+      .about section.card ul,
+      .about section.TitleCard p {
+        font-size: 1.3rem;
+        gap: 18px;
+      }
+    }
+    .about {
+        padding: 16px;
+        width: 95%;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text);
+        margin-top: 80px;
+    }
+    .about section.card, .about section.TitleCard{
+        background-color: var(--color-surface);
+        padding: 16px;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--color-border-translucent);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-strong);
+    }
+    .about section.TitleCard h1 {
+        font-size: 2.2rem;
+        margin: 0;
+    }
+    .about section.TitleCard h2 {
+        font-size: 1.4rem;
+        margin: 0;
+        font-weight: normal;
+        margin-top: 8px;
+        margin-bottom: 14px;
+    }
+    .about section.TitleCard p {
+        font-size: 1.1rem;
+        margin: 0;
+        text-align: center;
+    }
+    .about section.card h2 {
+        font-size: 1.4rem;
+        margin: 0;
+    }
+    .about section.card h3 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    .about section.card p {
+        font-size: 1.1rem;
+        margin: 0;
+        text-align: center;
+        margin-top: 8px;
+    }
+    .about section.card ul {
+        font-size: 1.1rem;
+        margin: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .about section.card a {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
 
-.about section.card, .about section.TitleCard{
-    background-color: var(--color-surface);
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid var(--color-border-translucent);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-strong);
-}
-
-.about section.TitleCard h1 {
-    font-size: 54px;
-    margin: 0;
-}
-
-.about section.TitleCard h2 {
-    font-size: 36px;
-    margin: 0;
-    font-weight: normal;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.about section.TitleCard p {
-    font-size: 26px;
-    margin: 0;
-    text-align: center;
-}
-
-.about section.card h2 {
-    font-size: 36px;
-    margin: 0;
-}
-
-.about section.card h3 {
-    font-size: 32px;
-    margin: 0;
-}
-
-.about section.card p {
-    font-size: 26px;
-    margin: 0;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.about section.card ul {
-    font-size: 26px;
-    margin: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.about section.card a {
-    color: var(--color-accent);
-    text-decoration: none;
-}
+    @media (max-width: 700px) {
+      .about {
+        width: 100%;
+        padding: 8px;
+        margin-top: 60px;
+        gap: 12px;
+      }
+      .about section.card, .about section.TitleCard {
+        padding: 6px;
+        gap: 4px;
+      }
+      .about section.TitleCard h1 {
+        font-size: 1.3rem;
+      }
+      .about section.TitleCard h2,
+      .about section.card h2 {
+        font-size: 1.1rem;
+      }
+      .about section.card h3 {
+        font-size: 1rem;
+      }
+      .about section.TitleCard p,
+      .about section.card p,
+      .about section.card ul {
+        font-size: 0.98rem;
+      }
+    }
