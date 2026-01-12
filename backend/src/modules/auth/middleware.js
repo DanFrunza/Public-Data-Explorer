@@ -16,4 +16,18 @@ function requireAuth(req, res, next) {
   }
 }
 
-module.exports = { requireAuth };
+function requireAuthOptional(req, res, next) {
+  const hdr = req.headers['authorization'] || '';
+  const m = hdr.match(/^Bearer\s+(.+)$/i);
+  if (!m) return next();
+  const token = m[1];
+  try {
+    const payload = jwt.verify(token, ACCESS_SECRET);
+    req.auth = payload;
+  } catch (err) {
+    // ignore invalid token, treat as guest
+  }
+  return next();
+}
+
+module.exports = { requireAuth, requireAuthOptional };

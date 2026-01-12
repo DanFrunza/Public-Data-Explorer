@@ -21,4 +21,11 @@ const avatarUploadLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { registerLimiter, loginLimiter, avatarUploadLimiter };
+const suggestionLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+module.exports = { registerLimiter, loginLimiter, avatarUploadLimiter, suggestionLimiter };

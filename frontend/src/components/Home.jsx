@@ -6,9 +6,9 @@ const Home = () => {
     <main className="home">
       <section className="TitleCard">
         <h1>Public Data Explorer</h1>
-        <h2>Discover public data, simply and interactively</h2>
+        <h2>Explore public data, simply</h2>
         <p>
-          A free site for visualizing and exploring public datasets (e.g. economy, population, education) through clear, interactive charts.
+          Quickly visualize public data from economy, population, education and more. The platform is free, interactive, and easy to use.
         </p>
       </section>
 
@@ -16,13 +16,13 @@ const Home = () => {
         <h2>What can you do here?</h2>
         <ul>
           <li>
-            <a href="#/dashboard">Dashboard</a> – view charts and explore real data
+            <a href="#/dashboard">Dashboard</a> – interactive charts with real data
           </li>
           <li>
             <a href="#/register">Create an account</a> or <a href="#/login">log in</a> to save preferences and export charts
           </li>
           <li>
-            <a href="#/about">About</a> – technical details and project motivation
+            <a href="#/about">About</a> – technical details and motivation
           </li>
           <li>
             <a href="#/faq">FAQ</a> – quick answers
@@ -31,12 +31,12 @@ const Home = () => {
       </section>
 
       <section className="card">
-        <h2>Good to know</h2>
+        <h2>Support the project</h2>
         <p>
-          This site is <b>free</b> and has no subscriptions – I originally planned premium plans, but decided to keep it open for everyone. If you want to support the project, donation options may be added in the future.
+          You can support the creator by donating! <a href="#/plans">See details here</a>.
         </p>
         <p>
-          Built by a passionate student as a portfolio and learning project. Anyone can use the platform to learn or explore real-world data.
+          The platform is built as a portfolio and educational resource. Anyone can explore real data and learn.
         </p>
       </section>
     </main>

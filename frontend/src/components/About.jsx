@@ -6,71 +6,50 @@ const About = () => {
     <main className="about">
       <section className="TitleCard">
         <h1>Public Data Explorer</h1>
-        <h2>Interactive visualizations for understanding real-world data</h2>
-        <p>Public Data Explorer is an educational platform focused on exploring and visualizing large public datasets using modern web technologies.</p>
+        <h2>Interactive visualizations for real-world data</h2>
+        <p>Public Data Explorer is an educational platform for exploring and visualizing public datasets, built with modern technologies.</p>
       </section>
 
       <section className="card">
-        <h2>What is Public Data Explorer?</h2>
+        <h2>About the project</h2>
         <p>
-          Public data is often complex, fragmented, and difficult to interpret.
-          This project transforms raw datasets into clear, interactive visualizations that make data easier to explore and understand.
+          Public data is often hard to access and interpret. The goal of this project is to transform these datasets into clear, interactive visualizations that are easy to explore.
+        </p>
+        <p>
+          The platform is designed as both an educational resource and a portfolio, and as a base for experiments with web and data engineering technologies.
         </p>
       </section>
 
       <section className="card">
-        <h2>WHAT YOU CAN EXPLORE</h2>
+        <h2>What can you explore?</h2>
         <ul>
           <li>Interactive dashboards built with D3.js</li>
-          <li>Exploration of public datasets (population, economy, education, etc.)</li>
-          <li>Clean and responsive UI</li>
-          <li>Scalable data processing pipelines</li>
-          <li>A structured backend API for data access</li>
+          <li>Public data from economy, population, education, etc.</li>
+          <li>Modern, responsive interface</li>
+          <li>Data processing pipeline (Python, future: GitHub Actions)</li>
+          <li>Structured backend API for data access</li>
         </ul>
-        <p>Some features are still under development, as this is an evolving project.</p>
+        <p>Features are constantly expanding, the project is evolving.</p>
       </section>
 
       <section className="card">
-        <h2>TECHNOLOGIES & STACK</h2>
-        <h3>Frontend</h3>
+        <h2>Technologies & Hosting</h2>
         <ul>
-          <li>React (Vite)</li>
-          <li>JavaScript</li>
-          <li>D3.js for data visualization</li>
-          <li>CSS for styling</li>
-          <li>React Router for navigation</li>
+          <li><b>Frontend:</b> React (Vite), hosted on GitHub Pages</li>
+          <li><b>Backend:</b> Node.js (Express), hosted on Render</li>
+          <li><b>Database:</b> Supabase (PostgreSQL)</li>
+          <li><b>Pipeline:</b> Python, future: GitHub Actions</li>
         </ul>
-        <h3>Backend</h3>
-        <ul>
-          <li>Node.js</li>
-          <li>Express</li>
-          <li>REST API</li>
-          <li>PostgreSQL for structured data</li>
-        </ul>
-        <h3>Data Processing</h3>
-        <ul>
-          <li>Python</li>
-          <li>PySpark for large-scale data processing</li>
-          <li>Parquet for efficient data storage</li>
-          <li>S3-compatible object storage (MinIO in development)</li>
-        </ul>
-        <h3>Infrastructure</h3>
-        <ul>
-          <li>Docker & Docker Compose</li>
-          <li>Environment-based configuration</li>
-          <li>Local-first development, cloud-ready architecture</li>
-        </ul>
-        <p>This stack is intentionally designed to mirror real-world production systems while remaining fully runnable in a local development environment.</p>
+        <p>The architecture is local-first, but cloud-ready. Configuration is based on environment variables.</p>
       </section>
 
       <section className="card">
-        <h2>ABOUT THE AUTHOR</h2>
+        <h2>About the author</h2>
         <p>
-          I am a Master’s student in Software Engineering at Alexandru Ioan Cuza University of Iași.
-          I previously completed a Bachelor’s degree in Mathematics and Computer Science at the Faculty of Mathematics.
+          I am a master's student in Software Engineering at UAIC Iași, graduate of Mathematics and Computer Science. This project is a practical extension of my studies and passion for web/data.
         </p>
         <p>
-          This project is a practical extension of my academic background and self-directed learning, including certifications from freeCodeCamp in:
+          I am certified by freeCodeCamp in:
         </p>
         <ul>
           <li>Responsive Web Design</li>
@@ -79,26 +58,18 @@ const About = () => {
           <li>Data Visualization (D3.js)</li>
         </ul>
         <p>
-          The goal is to continuously improve my skills in full-stack development, data visualization, and scalable system design.
+          My goal is to continuously improve my skills in full-stack development, data visualization, and scalable architectures.
         </p>
       </section>
+
       <section className="card">
-        <h2>CLOSING / CALL TO ACTION</h2>
-        <h3>Project status</h3>
-        <p>Public Data Explorer is an ongoing project and will continue to evolve over time.
-          New datasets, visualizations, and features will be added progressively.
-        </p>
-        <p>
-          This platform serves both as a learning environment and a portfolio project demonstrating modern web and data engineering practices.
-        </p>
-      </section>
-      <section className="card">
-        <h2>Contact</h2>
+        <h2>Status & Contact</h2>
+        <p>The project is constantly evolving. New datasets, visualizations, and features are coming soon.</p>
         <ul>
           <li>Email: dani.frunza@yahoo.com</li>
-          <li>GitHub: <a href="https://github.com/DanFrunza" target="_blank" rel="noopener noreferrer">https://github.com/DanFrunza</a></li>
-          <li>Project Repository: <a href="https://github.com/DanFrunza/Public-Data-Explorer" target="_blank" rel="noopener noreferrer">https://github.com/DanFrunza/Public-Data-Explorer</a></li>
-          <li>LinkedIn: <a href="https://www.linkedin.com/in/dan-frunza-135695284/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/dan-frunza-135695284/</a></li>
+          <li>GitHub: <a href="https://github.com/DanFrunza" target="_blank" rel="noopener noreferrer">DanFrunza</a></li>
+          <li>Repo: <a href="https://github.com/DanFrunza/Public-Data-Explorer" target="_blank" rel="noopener noreferrer">Public-Data-Explorer</a></li>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/dan-frunza-135695284/" target="_blank" rel="noopener noreferrer">dan-frunza-135695284</a></li>
         </ul>
       </section>
     </main>

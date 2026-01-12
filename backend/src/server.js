@@ -20,7 +20,10 @@ app.use('/api/users', require('./modules/users/routes'));
 // Catalog (countries list, metadata)
 app.use('/api/catalog', require('./modules/catalog/routes'));
 // Charts (curated data for graphs)
+
 app.use('/api/charts', require('./modules/charts/routes'));
+// Suggestions module
+app.use('/api/suggestions', require('./modules/suggestions/routes'));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
