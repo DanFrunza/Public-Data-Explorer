@@ -1,5 +1,7 @@
+
 import React from "react";
 import "../css/Home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -16,16 +18,16 @@ const Home = () => {
         <h2>What can you do here?</h2>
         <ul>
           <li>
-            <a href="#/dashboard">Dashboard</a> – interactive charts with real data
+            <Link to="/dashboard">Dashboard</Link> – interactive charts with real data
           </li>
           <li>
-            <a href="#/register">Create an account</a> or <a href="#/login">log in</a> to save preferences and export charts
+            <Link to="/register">Create an account</Link> or <Link to="/login">log in</Link> to save preferences and export charts
           </li>
           <li>
-            <a href="#/about">About</a> – technical details and motivation
+            <Link to="/about">About</Link> – technical details and motivation
           </li>
           <li>
-            <a href="#/faq">FAQ</a> – quick answers
+            <Link to="/faq">FAQ</Link> – quick answers
           </li>
         </ul>
       </section>
@@ -33,10 +35,28 @@ const Home = () => {
       <section className="card">
         <h2>Support the project</h2>
         <p>
-          You can support the creator by donating! <a href="#/plans">See details here</a>.
+          You can support the creator by donating! <Link to="/plans">See details here</Link>.
         </p>
         <p>
           The platform is built as a portfolio and educational resource. Anyone can explore real data and learn.
+        </p>
+      </section>
+
+      <section className="card">
+        <h2>Suggestions welcome!</h2>
+        <p>
+          I welcome any suggestions to improve the platform. You can send your ideas directly from the <Link to="/faq">FAQ page</Link>!
+        </p>
+        <ul>
+          <li>New data sources to add</li>
+          <li>Types of charts or visualizations you want to see</li>
+          <li>Interesting statistics or indicators to include</li>
+          <li>UI/UX improvements or accessibility ideas</li>
+          <li>Bug reports or technical issues</li>
+          <li>Feature requests, export formats, or anything else</li>
+        </ul>
+        <p>
+          Any help, feedback, or suggestion is greatly appreciated!
         </p>
       </section>
     </main>

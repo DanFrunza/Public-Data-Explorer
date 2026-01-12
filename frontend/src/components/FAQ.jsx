@@ -21,7 +21,8 @@ const FAQ = () => {
     }
     setLoading(true);
     try {
-      const res = await fetch("/api/suggestions", {
+      const apiBase = import.meta.env.VITE_API_BASE || '';
+      const res = await fetch(`${apiBase}/api/suggestions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
