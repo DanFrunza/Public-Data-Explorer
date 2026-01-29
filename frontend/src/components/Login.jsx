@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "../css/Auth.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials, setAuthStatus, setAuthError } from "../store/slices/authSlice";
 import { post } from "../api/apiClient";
@@ -33,7 +32,6 @@ const Login = () => {
     dispatch(setAuthStatus("loading"));
     try {
       const data = await post("/api/auth/login", formData, { auth: false });
-      // Backend returns { message, user, accessToken }
       dispatch(setCredentials({ token: data.accessToken || null, user: data.user }));
       dispatch(setAuthStatus("authenticated"));
       navigate('/dashboard');
@@ -47,27 +45,43 @@ const Login = () => {
   };
 
   return (
-    <main className="register">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} noValidate>
-        <fieldset>
-          <div className="form-group">
-            <label htmlFor="email">Email: </label>
-            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-          </div>
-          {errors.email && <span className="error">{errors.email}</span>}
-        </fieldset>
-        <fieldset>
-          <div className="form-group">
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-          </div>
-          {errors.password && <span className="error">{errors.password}</span>}
-        </fieldset>
-        <Link id="register-link" to="/register">You don't have an account? Register</Link>
-        {errors.server && <span className="error">{errors.server}</span>}
-        <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
-      </form>
+    <main className="auth-modern">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-badge">Welcome back</div>
+          <h1 className="hero-title">
+            <span className="text-gradient">Sign in</span> to your account
+          </h1>
+          <p className="hero-desc">
+            Access your dashboard and explore public data. Enter your credentials below.
+          </p>
+        </div>
+      </section>
+      {/* Login Card */}
+      <section className="auth-section">
+        <div className="auth-card">
+          <form onSubmit={handleSubmit} noValidate>
+            <fieldset>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+              </div>
+              {errors.email && <span className="error">{errors.email}</span>}
+            </fieldset>
+            <fieldset>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+              </div>
+              {errors.password && <span className="error">{errors.password}</span>}
+            </fieldset>
+            <Link id="register-link" to="/register">Don't have an account? Register</Link>
+            {errors.server && <span className="error">{errors.server}</span>}
+            <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+          </form>
+        </div>
+      </section>
     </main>
   );
 };

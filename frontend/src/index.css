@@ -1,22 +1,39 @@
 :root {
-  /* Core palette */
-  --color-bg: #0D1220;              /* page background */
-  --color-surface: #151A2E;         /* navbar/cards */
-  --color-surface-muted: #0F1426;   /* inputs/secondary blocks */
-  --color-text: #E6EAF2;            /* primary text */
-  --color-border: #2A3350;          /* subtle borders */
-  --color-border-translucent: rgba(255, 255, 255, 0.10); /* light border on dark */
-  --color-dropdown-bg: #FFFFFF;     /* dropdown surfaces */
-  --color-dropdown-text: #111827;   /* dropdown text */
-  --color-dropdown-hover: #F3F4F6;  /* dropdown hover */
-  --color-accent: #8B5CF6;          /* brand accent */
-  --color-accent-2: #7C3AED;        /* buttons/accent strong */
-  --color-chart-primary: #60A5FA;   /* chart lines/bars */
-  --color-neutral-light: #D1D5DB;   /* muted text/lines (≈ #ddd) */
-  --color-neutral-mid: #9CA3AF;     /* mid muted (≈ #aaa) */
-  --color-neutral-dark: #6B7280;    /* dark muted (≈ #888) */
-  --color-error: #EF4444;           /* errors */
-
+  /* Modern palette from UI Example */
+  --background: #0D1220;
+  --foreground: #E6EAF2;
+  --card: #151A2E;
+  --card-foreground: #E6EAF2;
+  --popover: #fff;
+  --popover-foreground: #1c2231;
+  --primary: #8B5CF6;
+  --primary-foreground: #fff;
+  --secondary: #7C3AED;
+  --secondary-foreground: #fff;
+  --muted: #0F1426;
+  --muted-foreground: #9CA3AF;
+  --accent: #8B5CF6;
+  --color-accent: #60A5FA; 
+  --accent-foreground: #fff;
+  --destructive: #EF4444;
+  --destructive-foreground: #fff;
+  --border: #2A3350;
+  --input: #2A3350;
+  --ring: #8B5CF6;
+  --radius: 0.5rem;
+  --chart-primary: #60A5FA;
+  --chart-secondary: #8B5CF6;
+  --chart-tertiary: #B983FF;
+  --chart-quaternary: #38BDF8;
+  --chart-quinary: #22C55E;
+  --sidebar-background: #151A2E;
+  --sidebar-foreground: #E6EAF2;
+  --sidebar-primary: #8B5CF6;
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: #0F1426;
+  --sidebar-accent-foreground: #E6EAF2;
+  --sidebar-border: #2A3350;
+  --sidebar-ring: #8B5CF6;
   /* Shadows */
   --shadow-soft: 0 4px 8px rgba(0, 0, 0, 0.20);
   --shadow-strong: 0 8px 16px rgba(0, 0, 0, 0.20);

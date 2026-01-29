@@ -1,106 +1,230 @@
-.faq {
-  padding: 16px;
-  width: 95%;
-  max-width: 700px;
+/* Container comun pentru întrebări frecvente și sugestii */
+.faq-questions-container {
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text);
-  margin-top: 80px;
+  gap: 2.5rem;
+  padding: 0 1rem;
 }
-
-.faq section.card {
-  background-color: var(--color-surface);
-  padding: 16px;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--color-border-translucent);
+.faq-suggest-section {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
-  align-items: center;
   justify-content: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+/* Suggestion Section - separate modern card */
+.faq-suggest-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0;
+  background: none;
+}
+.faq-suggest-card {
+  background: var(--card);
+  border-radius: var(--radius);
   box-shadow: var(--shadow-strong);
-}
-
-.faq-form {
-  width: 100%;
+  padding: 2.5rem 2rem 2rem 2rem;
+  color: var(--card-foreground);
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  align-items: center;
-}
-
-.faq-form textarea {
+  gap: 1.2rem;
+  max-width: 500px;
   width: 100%;
-  min-height: 90px;
-  max-width: 600px;
-  font-size: 1.1rem;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--color-border-translucent);
-  background: var(--color-bg);
-  color: var(--color-text);
-  resize: vertical;
+  border: 1.5px solid var(--primary);
+  margin: 0 auto;
 }
-
-.faq-form button {
-  font-size: 1.1rem;
-  padding: 10px 24px;
-  border-radius: 6px;
-  border: none;
-  background: var(--color-primary);
+.faq-suggest-card .faq-card-title {
+  color: var(--primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  text-align: left;
+}
+.faq-suggest-card .faq-card-desc {
+  color: var(--muted-foreground);
+  font-size: 1.08rem;
+}
+.faq-suggest-card .faq-suggestion-form textarea {
+  background: var(--background);
+  color: var(--foreground);
+}
+.faq-suggest-card .faq-suggestion-form button {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+@media (max-width: 700px) {
+  .faq-suggest-card {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
+  }
+}
+/* Modern FAQ page styles inspired by Home, About, Plans, and UI Example */
+.faq-modern {
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+.faq-hero-section {
+  padding: 7rem 1rem 3rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--card) 100%);
+  position: relative;
+}
+.faq-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.faq-hero-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.faq-hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.7rem;
+  letter-spacing: -1px;
+}
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary) 40%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.faq-title-white {
   color: #fff;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-fill-color: unset;
+}
+.faq-hero-desc {
+  color: var(--muted-foreground);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.faq-section {
+  background: var(--muted);
+  padding: 3rem 1rem 4rem 1rem;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.faq-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 2.5rem 2rem 2rem 2rem;
+  color: var(--card-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 0 auto 2rem auto;
+  min-height: 220px;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.faq-card:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-4px) scale(1.02);
+}
+.faq-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  color: var(--primary);
+}
+.faq-card-desc {
+  color: var(--muted-foreground);
+  font-size: 1.08rem;
+  flex: 1;
+}
+.faq-card--suggest {
+  background: var(--background);
+  border: 2px dashed var(--primary);
+  box-shadow: none;
+  color: var(--foreground);
+}
+.faq-suggestion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+.faq-suggestion-form textarea {
+  resize: vertical;
+  min-height: 60px;
+  max-height: 180px;
+  border-radius: 0.7rem;
+  border: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  background: var(--card);
+  color: var(--foreground);
+  transition: border 0.2s;
+}
+.faq-suggestion-form textarea:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+}
+.faq-suggestion-form button {
+  align-self: flex-end;
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-weight: 600;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
 }
-
-.faq-form button:disabled {
-  background: var(--color-border-translucent);
-  color: #aaa;
+.faq-suggestion-form button:disabled {
+  background: var(--border);
+  color: #fff;
   cursor: not-allowed;
 }
-
-.faq-form .error {
-  color: var(--color-error);
+.faq-status {
+  margin-top: 0.5rem;
   font-size: 1rem;
+  font-weight: 500;
 }
-
-.faq-form .success {
-  color: var(--color-success);
-  font-size: 1rem;
+.faq-error {
+  color: var(--destructive);
 }
-
-@media (min-width: 1100px) {
-  .faq section.card {
-    padding: 32px 36px;
-    gap: 28px;
-  }
-  .faq h1 {
-    font-size: 2.8rem;
-  }
-  .faq h2 {
-    font-size: 2rem;
-  }
-  .faq h3 {
-    font-size: 1.5rem;
-  }
-  .faq section.card p,
-  .faq section.card ul {
+.faq-success {
+  color: var(--primary);
+}
+@media (max-width: 700px) {
+  .faq-hero-title {
     font-size: 1.3rem;
-    gap: 18px;
   }
-  .faq-form textarea {
-    font-size: 1.3rem;
-    padding: 14px 18px;
+  .faq-card {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
   }
-  .faq-form button {
-    font-size: 1.3rem;
-    padding: 14px 28px;
+  .faq-hero-section {
+    padding: 2rem 0 1.2rem 0;
+  }
+  .faq-section {
+    padding: 1.5rem 0 2rem 0;
   }
 }

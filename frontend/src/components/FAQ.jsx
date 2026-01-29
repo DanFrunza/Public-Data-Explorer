@@ -46,38 +46,68 @@ const FAQ = () => {
   };
 
   return (
-    <main className="faq">
-      <section className="card">
-        <h1>FAQ & Suggestions</h1>
-        <p>Here you can find answers to common questions and send suggestions to improve the platform.</p>
-      </section>
-
-      <section className="card">
-        <h2>Send a suggestion</h2>
-        {!isAuthenticated ? (
-          <p style={{ color: "var(--color-error)", fontWeight: 500 }}>
-            You must be logged in to send a suggestion.
+    <main className="faq-modern">
+      {/* Hero Section */}
+      <section className="faq-hero-section">
+        <div className="faq-hero-content">
+          <div className="faq-hero-badge">❓ FAQ</div>
+          <h1 className="faq-hero-title">
+            <span className="text-gradient">Frequently Asked</span> <span className="faq-title-white">Questions</span>
+          </h1>
+          <p className="faq-hero-desc">
+            Find answers to common questions and send suggestions to help us improve the platform.
           </p>
-        ) : (
-          <form className="faq-form" onSubmit={handleSubmit} autoComplete="off">
-            <label htmlFor="suggestion">Your suggestion:</label>
-            <textarea
-              id="suggestion"
-              value={text}
-              onChange={e => setText(e.target.value)}
-              minLength={5}
-              maxLength={1000}
-              required
-              placeholder="Write your suggestion here..."
-              disabled={loading}
-            />
-            <button type="submit" disabled={loading || !text.trim() || text.trim().length < 5}>
-              {loading ? "Sending..." : "Send suggestion"}
-            </button>
-            {error && <div className="error">{error}</div>}
-            {success && <div className="success">{success}</div>}
-          </form>
-        )}
+        </div>
+      </section>
+      {/* FAQ Section */}
+      <section className="faq-section">
+        <div className="faq-questions-container">
+          <div className="faq-grid">
+            <div className="faq-card faq-card--faq1">
+              <div className="faq-card-title">Is the platform free?</div>
+              <div className="faq-card-desc">Yes, all features are free and accessible to everyone. In the future, we may add optional donation options to support development.</div>
+            </div>
+            <div className="faq-card faq-card--faq2">
+              <div className="faq-card-title">Where does the data come from?</div>
+              <div className="faq-card-desc">Most data is sourced from reputable public sources such as the World Bank, Eurostat, and national statistics agencies. Data sources are always cited on each chart or dashboard.</div>
+            </div>
+            <div className="faq-card faq-card--faq3">
+              <div className="faq-card-title">Can I use the charts in my own work?</div>
+              <div className="faq-card-desc">Yes! You can export charts as images or CSV and use them in presentations, reports, or educational materials. Please credit the platform and the original data source.</div>
+            </div>
+            <div className="faq-card faq-card--faq4">
+              <div className="faq-card-title">How can I suggest a new feature or dataset?</div>
+              <div className="faq-card-desc">You can send suggestions using the form below. We welcome feedback and ideas for new features, datasets, or improvements!</div>
+            </div>
+          </div>
+          {/* Suggestion Section - under grid, but in same container */}
+          <div className="faq-suggest-section">
+            <div className="faq-suggest-card">
+              <div className="faq-card-title">Send a suggestion</div>
+              {!isAuthenticated ? (
+                <div className="faq-card-desc faq-error">
+                  You must be logged in to send a suggestion.
+                </div>
+              ) : (
+                <form className="faq-suggestion-form" onSubmit={handleSubmit} autoComplete="off">
+                  <textarea
+                    value={text}
+                    onChange={e => setText(e.target.value)}
+                    placeholder="Your suggestion..."
+                    minLength={5}
+                    maxLength={500}
+                    required
+                  />
+                  <button type="submit" disabled={loading}>
+                    {loading ? "Sending..." : "Send"}
+                  </button>
+                  {error && <div className="faq-status faq-error">{error}</div>}
+                  {success && <div className="faq-status faq-success">{success}</div>}
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );

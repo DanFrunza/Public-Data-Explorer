@@ -1,121 +1,142 @@
-    @media (min-width: 1100px) {
-      .about section.card, .about section.TitleCard {
-        padding: 32px 36px;
-        gap: 28px;
-      }
-      .about section.TitleCard h1 {
-        font-size: 2.8rem;
-      }
-      .about section.TitleCard h2,
-      .about section.card h2 {
-        font-size: 2rem;
-      }
-      .about section.card h3 {
-        font-size: 1.5rem;
-      }
-      .about section.card p,
-      .about section.card ul,
-      .about section.TitleCard p {
-        font-size: 1.3rem;
-        gap: 18px;
-      }
-    }
-    .about {
-        padding: 16px;
-        width: 80%;
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-text);
-        margin-top: 80px;
-    }
-    .about section.card, .about section.TitleCard{
-        background-color: var(--color-surface);
-        padding: 16px;
-        border-radius: 8px;
-        width: 100%;
-        box-sizing: border-box;
-        border: 1px solid var(--color-border-translucent);
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        align-items: center;
-        justify-content: center;
-        box-shadow: var(--shadow-strong);
-    }
-    .about section.TitleCard h1 {
-        font-size: 2.2rem;
-        margin: 0;
-    }
-    .about section.TitleCard h2 {
-        font-size: 1.4rem;
-        margin: 0;
-        font-weight: normal;
-        margin-top: 8px;
-        margin-bottom: 14px;
-    }
-    .about section.TitleCard p {
-        font-size: 1.1rem;
-        margin: 0;
-        text-align: center;
-    }
-    .about section.card h2 {
-        font-size: 1.4rem;
-        margin: 0;
-    }
-    .about section.card h3 {
-        font-size: 1.2rem;
-        margin: 0;
-    }
-    .about section.card p {
-        font-size: 1.1rem;
-        margin: 0;
-        text-align: center;
-        margin-top: 8px;
-    }
-    .about section.card ul {
-        font-size: 1.1rem;
-        margin: 0;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        justify-content: center;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    .about section.card a {
-        color: var(--color-accent);
-        text-decoration: none;
-    }
+.about-title-white {
+  color: #fff;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-fill-color: unset;
+}
 
-    @media (max-width: 700px) {
-      .about {
-        width: 100%;
-        padding: 8px;
-        margin-top: 60px;
-        gap: 12px;
-      }
-      .about section.card, .about section.TitleCard {
-        padding: 6px;
-        gap: 4px;
-      }
-      .about section.TitleCard h1 {
-        font-size: 1.3rem;
-      }
-      .about section.TitleCard h2,
-      .about section.card h2 {
-        font-size: 1.1rem;
-      }
-      .about section.card h3 {
-        font-size: 1rem;
-      }
-      .about section.TitleCard p,
-      .about section.card p,
-      .about section.card ul {
-        font-size: 0.98rem;
-      }
-    }
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "project explore"
+    "tech author"
+    "status status";
+  gap: 2.2rem 2.2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.about-card--project { grid-area: project; }
+.about-card--explore { grid-area: explore; }
+.about-card--tech { grid-area: tech; }
+.about-card--author { grid-area: author; }
+.about-card--status { grid-area: status; }
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "project"
+      "explore"
+      "tech"
+      "author"
+      "status";
+    gap: 1.2rem;
+  }
+}
+
+/* Modern About page styles inspired by UI Example and Home */
+.about-modern {
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+.about-hero-section {
+  padding: 7rem 1rem 3rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--card) 100%);
+  position: relative;
+}
+.about-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.about-hero-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.about-hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.7rem;
+  letter-spacing: -1px;
+}
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary) 40%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.about-hero-desc {
+  color: var(--muted-foreground);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.about-section {
+  background: var(--muted);
+  padding: 3rem 1rem 3rem 1rem;
+}
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.about-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 2.5rem 2rem 2rem 2rem;
+  color: var(--card-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 0 auto 2rem auto;
+  max-width: 650px;
+}
+.about-card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.about-card-desc {
+  color: var(--muted-foreground);
+  font-size: 1.08rem;
+  text-align: center;
+}
+.about-card ul {
+  margin: 0.5em 0 0.5em 1.2em;
+  padding: 0;
+  color: var(--muted-foreground);
+  font-size: 1.05rem;
+}
+.about-card li {
+  margin-bottom: 0.3em;
+}
+.about-link {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .about-hero-title {
+    font-size: 1.3rem;
+  }
+  .about-card {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
+  }
+}

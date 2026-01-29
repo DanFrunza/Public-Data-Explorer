@@ -1,139 +1,161 @@
-@media (min-width: 1100px) {
-  .register form {
-    padding: 32px 36px;
-    gap: 28px;
-  }
-  .register h1 {
-    font-size: 2.8rem;
-  }
-  .register .form-group label {
-    font-size: 1.3rem;
-  }
-  .register .form-group input,
-  .register button {
-    font-size: 1.3rem;
-    padding: 14px 18px;
-  }
-  .register .error,
-  .register #register-link {
-    font-size: 1.1rem;
-  }
+
+.auth-modern {
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.register {
-  padding: 16px;
-  width: 95%;
-  max-width: 500px;
+
+.hero-section {
+  padding: 6rem 1rem 2.5rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--card) 100%);
+  position: relative;
+}
+.hero-content {
+  max-width: 480px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text);
-  margin-top: 80px;
+  position: relative;
+  z-index: 2;
 }
-
-.register form{
-  background-color: var(--color-surface);
-  padding: 16px;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--color-border-translucent);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-strong);
-}
-
-.register .form-group {
-  display: flex;
-  flex-direction: column; 
-  width: 100%; 
-}
-
-.register .form-group label {
-  margin-bottom: 4px; 
-  font-weight: 600;
-}
-
-.register .form-group input {
-  padding: 8px;
+.hero-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
   font-size: 1rem;
-  border: 1px solid var(--color-border);  
-  border-radius: 6px;
-  width: 100%;  
-  box-sizing: border-box; 
-  background-color: var(--color-surface-muted); 
-  color: var(--color-text);
-  outline: none;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary) 40%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.hero-desc {
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
 }
 
-.register .error {
-  color: var(--color-error);
-  font-size: 0.95rem;
-  margin-top: 2px;
-  align-self: center; 
-}
-
-.register fieldset {
+.auth-section {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  border: none;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+.auth-card {
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--shadow-strong);
+  border-radius: 16px;
+  padding: 36px 32px 28px 32px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.register input:-webkit-autofill,
-.register input:-webkit-autofill:hover, 
-.register input:-webkit-autofill:focus, 
-.register input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0px 1000px var(--color-surface-muted) inset !important;
-  -webkit-text-fill-color: var(--color-text) !important;
-  transition: background-color 5000s ease-in-out 0s;
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.register button {
-    padding: 8px 16px;
-    font-size: 1rem;
-    background-color: var(--color-accent-2);
-    color: var(--color-text);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 8px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.register #register-link {
-    color: var(--color-text);
-    text-decoration: none;
-    font-size: 0.95rem;
-    margin-top: 8px;
+.form-group label {
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--card-foreground);
+}
+
+.form-group input {
+  padding: 12px 14px;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--muted);
+  color: var(--card-foreground);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s;
+}
+.form-group input:focus {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.error {
+  color: var(--destructive);
+  font-size: 0.98rem;
+  margin-top: 2px;
+  align-self: flex-start;
+}
+
+.auth-card button {
+  padding: 12px 0;
+  font-size: 1.12rem;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.auth-card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+#register-link, #login-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 1.01rem;
+  margin-top: 8px;
+  font-weight: 500;
+  display: inline-block;
+}
+#register-link:hover, #login-link:hover {
+  text-decoration: underline;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 700px) {
-  .register {
-    width: 100%;
-    padding: 8px;
-    margin-top: 60px;
-    gap: 20px;
+  .hero-section {
+    padding: 32px 0 18px 0;
   }
-  .register form {
-    padding: 8px;
-    gap: 6px;
+  .hero-content {
+    padding: 0 8px;
   }
-  .register .form-group input,
-  .register button {
-    font-size: 0.95rem;
-    padding: 6px 8px;
-  }
-  .register .error,
-  .register #register-link {
-    font-size: 0.9rem;
+  .auth-card {
+    padding: 18px 8px 16px 8px;
+    max-width: 98vw;
   }
 }

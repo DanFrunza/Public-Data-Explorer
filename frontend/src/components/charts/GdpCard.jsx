@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState, forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../../store/slices/authSlice';
+import '../../css/GdpCard.css';
 
 // Use same-origin by default (via dev proxy); override with VITE_API_BASE when needed
 const API_BASE = import.meta.env.VITE_API_BASE || '';
@@ -413,15 +414,21 @@ export default function GdpCard() {
 
 
   return (
-    <div className="chart-card-inner">
-      <h2 className="chart-title">GDP (World Bank)</h2>
-      <div className="chart-controls">
-        <label htmlFor="gdp-country" className="chart-label">Country/Region:</label>
+    <div className="chart-card-inner gdp-modern-card">
+      <div className="gdp-header">
+        <div className="gdp-badge">🌍 GDP Data</div>
+        <h2 className="gdp-title text-gradient">GDP (World Bank)</h2>
+        <div className="gdp-about">
+          <span className="gdp-about-title">About:</span> Gross Domestic Product (GDP) data from the World Bank, 1990–present. Values are in current USD. Growth is calculated as year-over-year percent change. Data may be revised by the source.
+        </div>
+      </div>
+      <div className="gdp-controls">
+        <label htmlFor="gdp-country" className="gdp-label">Country/Region:</label>
         <select
           id="gdp-country"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="chart-select"
+          className="gdp-select"
         >
           <optgroup label="Countries">
             {groups.sovereigns.map(c => (
@@ -434,24 +441,24 @@ export default function GdpCard() {
             ))}
           </optgroup>
         </select>
-        <label htmlFor="gdp-viz" className="chart-label">Visualization:</label>
+        <label htmlFor="gdp-viz" className="gdp-label">Visualization:</label>
         <select
           id="gdp-viz"
           value={viz}
           onChange={(e) => setViz(e.target.value)}
-          className="chart-select"
+          className="gdp-select"
         >
           <option value="current">Nominal (current USD)</option>
           <option value="yoy">Growth YoY (%)</option>
         </select>
         {isAuthenticated && (
-          <div className="chart-export">
-            <label htmlFor="export-format" className="chart-label">Export:</label>
+          <div className="gdp-export">
+            <label htmlFor="export-format" className="gdp-label">Export:</label>
             <select
               id="export-format"
               value={exportFmt}
               onChange={(e) => setExportFmt(e.target.value)}
-              className="chart-select"
+              className="gdp-select"
             >
               <option value="">Select format</option>
               <option value="png">PNG</option>
@@ -463,12 +470,12 @@ export default function GdpCard() {
             </select>
             {exportFmt === 'png' && (
               <>
-                <label htmlFor="png-bg" className="chart-label">Background:</label>
+                <label htmlFor="png-bg" className="gdp-label">Background:</label>
                 <select
                   id="png-bg"
                   value={exportPngBg}
                   onChange={(e) => setExportPngBg(e.target.value)}
-                  className="chart-select"
+                  className="gdp-select"
                 >
                   <option value="transparent">Transparent</option>
                   <option value="surface">Card Surface</option>
@@ -478,12 +485,12 @@ export default function GdpCard() {
             )}
             {(exportFmt === 'png' || exportFmt === 'jpeg' || exportFmt === 'webp') && (
               <>
-                <label htmlFor="scale" className="chart-label">Scale:</label>
+                <label htmlFor="scale" className="gdp-label">Scale:</label>
                 <select
                   id="scale"
                   value={exportScale}
                   onChange={(e) => setExportScale(Number(e.target.value))}
-                  className="chart-select"
+                  className="gdp-select"
                 >
                   <option value={1}>1x</option>
                   <option value={2}>2x</option>
@@ -492,7 +499,7 @@ export default function GdpCard() {
               </>
             )}
             <button
-              className="chart-button"
+              className="gdp-button"
               type="button"
               disabled={!exportFmt || (!svgRef.current && (exportFmt === 'png' || exportFmt === 'svg' || exportFmt === 'jpeg' || exportFmt === 'webp'))}
               onClick={handleExport}
@@ -502,22 +509,23 @@ export default function GdpCard() {
           </div>
         )}
       </div>
-      <div className="chart-area">
+      <div className="gdp-chart-area">
         {loading ? (
-          <div className="chart-status">Loading countries…</div>
+          <div className="gdp-status">Loading countries…</div>
         ) : error ? (
-          <div className="chart-status error">Failed to load countries</div>
+          <div className="gdp-status gdp-error">Failed to load countries</div>
         ) : (
           <>
             <LineChart ref={svgRef} series={series} valueFormatter={viz === 'yoy' ? percentFormat : numberFormat} />
-            <div className="chart-legend">
-              <span className="legend-dot" />
-              <span className="legend-text">{selected?.name || code} • {viz === 'current' ? 'current USD' : 'YoY %'}</span>
+            <div className="gdp-legend">
+              <span className="gdp-legend-dot" />
+              <span className="gdp-legend-text">{selected?.name || code} • {viz === 'current' ? 'current USD' : 'YoY %'}</span>
             </div>
           </>
         )}
-        {fetching && <div className="chart-status subtle">Loading GDP series…</div>}
+        {fetching && <div className="gdp-status gdp-subtle">Loading GDP series…</div>}
       </div>
+      <div className="gdp-source">Source: World Bank Open Data (data.worldbank.org)</div>
     </div>
   );
 }

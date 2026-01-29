@@ -1,0 +1,132 @@
+/* Modern GDP Card styles inspired by UI Example */
+.gdp-modern-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 2.5rem 2rem 2rem 2rem;
+  color: var(--card-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.gdp-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.gdp-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+.gdp-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+.gdp-about {
+  color: var(--muted-foreground);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+.gdp-about-title {
+  color: var(--primary);
+  font-weight: 600;
+  margin-right: 0.3em;
+}
+.gdp-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.gdp-label {
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.gdp-select {
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 0.3em;
+  margin-right: 0.8em;
+}
+.gdp-export {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+.gdp-button {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.5em 1.3em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.gdp-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.gdp-button:hover:not(:disabled) {
+  background: var(--secondary);
+}
+.gdp-chart-area {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.gdp-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 1.2em;
+  justify-content: center;
+}
+.gdp-legend-dot {
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  background: var(--chart-primary);
+  display: inline-block;
+}
+.gdp-legend-text {
+  color: var(--muted-foreground);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.gdp-status {
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  margin: 0.7em 0;
+}
+.gdp-error {
+  color: var(--destructive);
+}
+.gdp-subtle {
+  color: var(--muted-foreground);
+  opacity: 0.7;
+}
+.gdp-source {
+  text-align: right;
+  color: var(--muted-foreground);
+  font-size: 0.98rem;
+  margin-top: 0.5em;
+  font-style: italic;
+}

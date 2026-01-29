@@ -1,66 +1,99 @@
 
+
 import React from "react";
-import "../css/Home.css";
 import { Link } from "react-router-dom";
+import Card from "./ui-basic/Card.jsx";
+import "../css/Home.css";
 
-const Home = () => {
-  return (
-    <main className="home">
-      <section className="TitleCard">
-        <h1>Public Data Explorer</h1>
-        <h2>Explore public data, simply</h2>
-        <p>
-          Quickly visualize public data from economy, population, education and more. The platform is free, interactive, and easy to use.
-        </p>
-      </section>
+const features = [
+  {
+    title: "Dashboard",
+    description: "Interactive charts with real data from economy, population, and more.",
+    link: "/dashboard",
+  },
+  {
+    title: "Create Account",
+    description: "Save preferences and export charts with a free account.",
+    link: "/register",
+  },
+  {
+    title: "About",
+    description: "Technical details and motivation behind the project.",
+    link: "/about",
+  },
+  {
+    title: "FAQ",
+    description: "Quick answers to common questions.",
+    link: "/faq",
+  },
+];
 
-      <section className="card">
-        <h2>What can you do here?</h2>
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link> – interactive charts with real data
-          </li>
-          <li>
-            <Link to="/register">Create an account</Link> or <Link to="/login">log in</Link> to save preferences and export charts
-          </li>
-          <li>
-            <Link to="/about">About</Link> – technical details and motivation
-          </li>
-          <li>
-            <Link to="/faq">FAQ</Link> – quick answers
-          </li>
-        </ul>
-      </section>
+const suggestions = [
+  "New data sources to add",
+  "Types of charts or visualizations you want to see",
+  "Interesting statistics or indicators to include",
+  "UI/UX improvements or accessibility ideas",
+  "Bug reports or technical issues",
+  "Feature requests, export formats, or anything else",
+];
 
-      <section className="card">
-        <h2>Support the project</h2>
-        <p>
-          You can support the creator by donating! <Link to="/plans">See details here</Link>.
+const Home = () => (
+  <main className="home-modern">
+    {/* Hero Section */}
+    <section className="hero-section">
+      <div className="hero-content">
+        <div className="hero-badge">Free & Interactive</div>
+        <h1 className="hero-title">
+          <span className="text-gradient">Public Data</span> Explorer
+        </h1>
+        <p className="hero-desc">
+          Explore public data, simply. Quickly visualize data from economy, population, education and more. The platform is free, interactive, and easy to use.
         </p>
-        <p>
-          The platform is built as a portfolio and educational resource. Anyone can explore real data and learn.
-        </p>
-      </section>
+        <div className="hero-actions">
+          <Link to="/dashboard" className="hero-btn primary">Explore Dashboard</Link>
+          <Link to="/about" className="hero-btn outline">Learn More</Link>
+        </div>
+      </div>
+    </section>
 
-      <section className="card">
-        <h2>Suggestions welcome!</h2>
-        <p>
-          I welcome any suggestions to improve the platform. You can send your ideas directly from the <Link to="/faq">FAQ page</Link>!
-        </p>
-        <ul>
-          <li>New data sources to add</li>
-          <li>Types of charts or visualizations you want to see</li>
-          <li>Interesting statistics or indicators to include</li>
-          <li>UI/UX improvements or accessibility ideas</li>
-          <li>Bug reports or technical issues</li>
-          <li>Feature requests, export formats, or anything else</li>
-        </ul>
-        <p>
-          Any help, feedback, or suggestion is greatly appreciated!
-        </p>
-      </section>
-    </main>
-  );
-}
+    {/* Features Section */}
+    <section className="features-section">
+      <h2 className="section-title">What can you do here?</h2>
+      <div className="features-grid">
+        {features.map((feature, i) => (
+          <Card key={i}>
+            <div className="feature-title">{feature.title}</div>
+            <div className="feature-desc">{feature.description}</div>
+            <Link to={feature.link} className="feature-link">Explore &rarr;</Link>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    {/* Support & Suggestions Section */}
+    <section className="support-section">
+      <div className="support-grid">
+        <Card>
+          <div className="support-title">Support the project</div>
+          <div className="support-desc">
+            You can support the creator by donating! <Link to="/plans">See details here</Link>.<br/>
+            The platform is built as a portfolio and educational resource. Anyone can explore real data and learn.
+          </div>
+        </Card>
+        <Card>
+          <div className="support-title">Suggestions welcome!</div>
+          <div className="support-desc">
+            I welcome any suggestions to improve the platform. You can send your ideas from the <Link to="/faq">FAQ page</Link>!
+            <ul className="suggestions-list">
+              {suggestions.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </Card>
+      </div>
+    </section>
+  </main>
+);
 
 export default Home;
