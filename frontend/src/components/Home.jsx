@@ -42,7 +42,7 @@ const Home = () => (
     {/* Hero Section */}
     <section className="hero-section">
       <div className="hero-content">
-        <div className="hero-badge">Free & Interactive</div>
+        <div className="hero-badge">🚀 Free & Interactive</div>
         <h1 className="hero-title">
           <span className="text-gradient">Public Data</span> Explorer
         </h1>

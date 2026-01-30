@@ -1,183 +1,156 @@
-@media (min-width: 1200px) {
-  .profile section.card {
-    width: 80%;
-    max-width: 1536px;
-    min-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-@media (min-width: 1100px) {
-  .profile section.card {
-    padding: 32px 36px;
-    gap: 28px;
-  }
-  .profile h1 {
-    font-size: 2.8rem;
-  }
-  .profile h2 {
-    font-size: 2rem;
-  }
-  .profile h3 {
-    font-size: 1.5rem;
-  }
-  .profile section.card .form-grid,
-  .profile section.card ul {
-    font-size: 1.3rem;
-    gap: 18px;
-  }
-  .profile section.card .form-grid input,
-  .profile section.card .form-grid select,
-  .profile section.card .form-grid textarea {
-    font-size: 1.3rem;
-    padding: 14px 18px;
-  }
-  .profile section #avatar-container img {
-    width: 180px;
-    height: 180px;
-    margin-left: 40px;
-  }
+
+/* Modern Profile page styles */
+
+.profile-modern {
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.profile {
-    padding: 16px;
-    width: 95%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text);
-    margin-top: 80px;
+.profile-hero-section {
+  padding: 6rem 1rem 2.5rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--card) 100%);
+  position: relative;
 }
-.profile #profile-data {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
+.profile-hero-content {
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
-.profile section.card{
-    background-color: var(--color-surface);
-    padding: 16px;
-    border-radius: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    box-shadow: var(--shadow-strong);
+.profile-hero-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
-.profile h1 {
-    font-size: 2.2rem;
-    margin: 0;
+.profile-hero-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
 }
-.profile h2 {
-    font-size: 1.4rem;
-    margin: 0;
+.profile-hero-desc {
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
 }
-.profile h3 {
-    font-size: 1.2rem;
-    margin: 0;
+
+.profile-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 48px;
+  margin-bottom: 32px;
 }
-.profile section.card ul {
-    font-size: 1.1rem;
-    margin: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.profile-card {
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--shadow-strong);
+  border-radius: 16px;
+  padding: 36px 32px 28px 32px;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-.profile section.card .form-grid {
-    font-size: 1.1rem;
-    margin: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+
+.profile-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-.profile section.card .form-grid label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    color: var(--color-text);
+
+.profile-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.profile section.card .form-grid input,
-.profile section.card .form-grid select,
-.profile section.card .form-grid textarea {
-    width: 100%;
-    box-sizing: border-box;
-    background-color: var(--color-surface-muted);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 1.1rem;
+
+.profile-form-group label {
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--card-foreground);
 }
-.profile section.card .form-grid input:focus,
-.profile section.card .form-grid select:focus,
-.profile section.card .form-grid textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
+
+.profile-form-group input,
+.profile-form-group select,
+.profile-form-group textarea {
+  padding: 12px 14px;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--muted);
+  color: var(--card-foreground);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s;
 }
-.profile section.card li {
-    list-style-type: none;
+.profile-form-group input:focus,
+.profile-form-group select:focus,
+.profile-form-group textarea:focus {
+  box-shadow: 0 0 0 2px var(--ring);
 }
-.profile section #avatar-container img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--color-text);
-    align-self: center;
-    margin-left: 20px;
+
+.profile-error {
+  color: var(--destructive);
+  font-size: 0.98rem;
+  margin-top: 2px;
+  align-self: flex-start;
+}
+
+.profile-card button {
+  padding: 12px 32px;
+  font-size: 1.12rem;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.profile-card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--card-foreground);
+  align-self: center;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 700px) {
-  .profile {
-    width: 100%;
-    padding: 8px;
-    margin-top: 60px;
-    gap: 10px;
+  .profile-hero-section {
+    padding: 32px 0 18px 0;
   }
-  .profile #profile-data {
-    flex-direction: column;
-    gap: 12px;
+  .profile-hero-content {
+    padding: 0 8px;
   }
-  .profile section.card {
-    padding: 6px;
-    gap: 4px;
+  .profile-card {
+    padding: 18px 8px 16px 8px;
+    max-width: 98vw;
   }
-  .profile h1 {
-    font-size: 1.3rem;
-  }
-  .profile h2 {
-    font-size: 1.1rem;
-  }
-  .profile h3 {
-    font-size: 1rem;
-  }
-  .profile section.card .form-grid,
-  .profile section.card ul {
-    font-size: 0.98rem;
-    gap: 6px;
-  }
-  .profile section.card .form-grid input,
-  .profile section.card .form-grid select,
-  .profile section.card .form-grid textarea {
-    font-size: 0.98rem;
-    padding: 6px 8px;
-  }
-  .profile section #avatar-container img {
+  .profile-avatar {
     width: 80px;
     height: 80px;
-    margin-left: 0;
   }
 }

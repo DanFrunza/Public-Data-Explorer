@@ -49,7 +49,7 @@ const Login = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <div className="hero-badge">Welcome back</div>
+          <div className="hero-badge">🔑 Login</div>
           <h1 className="hero-title">
             <span className="text-gradient">Sign in</span> to your account
           </h1>

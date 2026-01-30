@@ -100,7 +100,7 @@ const Register = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <div className="hero-badge">Create Account</div>
+          <div className="hero-badge">📝 Register</div>
           <h1 className="hero-title">
             <span className="text-gradient">Register</span> for free
           </h1>

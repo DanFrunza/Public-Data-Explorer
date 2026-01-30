@@ -10,7 +10,7 @@ const Dashboard = () => (
     {/* Hero Section (light color) */}
     <section className="dashboard-hero-section">
       <div className="dashboard-hero-content">
-        <div className="dashboard-hero-badge">Data Insights</div>
+        <div className="dashboard-hero-badge">📊 Dashboard</div>
         <h1 className="dashboard-hero-title">
           <span className="text-gradient">Dashboard</span>
         </h1>
